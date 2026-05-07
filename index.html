@@ -1,447 +1,725 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Slut Checklist RU</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Checklist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #131313;
+      --surface2: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --muted: #666;
+      --accent: #e8c547;
+      --green: #4ade80;
+      --easy: #4ade80;
+      --medium: #facc15;
+      --hard: #f97316;
+      --extreme: #ef4444;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-            animation: slideDown 0.6s ease-out;
-        }
+    /* ── TOP BAR ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
 
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
+    .topbar-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
 
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.95;
-        }
+    .topbar-stats {
+      display: flex;
+      gap: 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+    }
 
-        .stats {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            animation: slideUp 0.6s ease-out 0.2s both;
-        }
+    .topbar-stat { color: var(--muted); }
+    .topbar-stat span { color: var(--text); font-weight: 500; }
 
-        .stat-box {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px 30px;
-            border-radius: 10px;
-            color: white;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
+    /* ── DIFFICULTY SELECTOR ── */
+    .difficulty-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            display: block;
-        }
+    .difficulty-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-right: 6px;
+    }
 
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
+    .diff-btn {
+      padding: 6px 18px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
 
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 40px;
-            animation: slideUp 0.6s ease-out 0.3s both;
-        }
+    .diff-btn:hover { border-color: var(--text); color: var(--text); }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-            transition: width 0.3s ease;
-            border-radius: 10px;
-        }
+    .diff-btn.active[data-level="1"] { background: var(--easy); border-color: var(--easy); color: #000; }
+    .diff-btn.active[data-level="2"] { background: var(--medium); border-color: var(--medium); color: #000; }
+    .diff-btn.active[data-level="3"] { background: var(--hard); border-color: var(--hard); color: #000; }
+    .diff-btn.active[data-level="4"] { background: var(--extreme); border-color: var(--extreme); color: #fff; }
 
-        .checklist {
-            display: grid;
-            gap: 15px;
-            animation: fadeIn 0.6s ease-out 0.4s both;
-        }
+    .diff-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-left: auto;
+    }
 
-        .checklist-item {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            border-left: 4px solid #667eea;
-        }
+    /* ── MAIN LAYOUT ── */
+    .main {
+      padding: 28px 20px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-        .checklist-item:hover {
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-            transform: translateY(-2px);
-        }
+    /* ── GLOBAL PROGRESS ── */
+    .global-progress {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
 
-        .checklist-item.completed {
-            background: #f0f9ff;
-            border-left-color: #10b981;
-        }
+    .progress-track {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
 
-        .checkbox {
-            width: 24px;
-            height: 24px;
-            min-width: 24px;
-            border: 2px solid #667eea;
-            border-radius: 6px;
-            cursor: pointer;
-            position: relative;
-            background: white;
-            transition: all 0.3s ease;
-            margin-top: 2px;
-        }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
 
-        .checklist-item.completed .checkbox {
-            background: #10b981;
-            border-color: #10b981;
-        }
+    .progress-pct {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      min-width: 40px;
+    }
 
-        .checkbox::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 16px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+    /* ── CATEGORIES GRID ── */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
 
-        .checklist-item.completed .checkbox::after {
-            opacity: 1;
-        }
+    .category-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
 
-        .item-content {
-            flex: 1;
-        }
+    .category-card:hover { border-color: #3a3a3a; }
 
-        .item-number {
-            font-size: 0.85rem;
-            color: #999;
-            margin-bottom: 5px;
-        }
+    .category-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
 
-        .item-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            transition: color 0.3s ease;
-        }
+    .category-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
 
-        .checklist-item.completed .item-title {
-            color: #10b981;
-            text-decoration: line-through;
-        }
+    .category-desc {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
 
-        .item-description {
-            font-size: 0.95rem;
-            color: #666;
-            line-height: 1.5;
-        }
+    .category-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
 
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 40px;
-            justify-content: center;
-            animation: slideUp 0.6s ease-out 0.5s both;
-        }
+    .category-meta .pts { color: var(--accent); }
 
-        button {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+    /* ── CATEGORY PROGRESS BAR ── */
+    .category-progress {
+      height: 2px;
+      background: var(--border);
+    }
 
-        .btn-primary {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+    .category-progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
+    /* ── TASK LIST ── */
+    .task-list {
+      padding: 6px 0;
+    }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid white;
-            backdrop-filter: blur(10px);
-        }
+    .task-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 18px;
+      cursor: pointer;
+      transition: background 0.12s;
+      border-bottom: 1px solid transparent;
+    }
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+    .task-row:hover { background: var(--surface2); }
 
-        .footer {
-            text-align: center;
-            color: white;
-            margin-top: 40px;
-            opacity: 0.8;
-            font-size: 0.9rem;
-        }
+    .task-row:last-child { border-bottom: none; }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .task-check {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 3px;
+      position: relative;
+      transition: all 0.15s;
+      background: transparent;
+    }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .task-row.done .task-check {
+      background: var(--green);
+      border-color: var(--green);
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
+    .task-check::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 4px;
+      width: 5px; height: 8px;
+      border: 1.5px solid #000;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) scale(0);
+      transition: transform 0.15s;
+    }
 
-        @media (max-width: 600px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
+    .task-row.done .task-check::after { transform: rotate(45deg) scale(1); }
 
-            .stats {
-                flex-direction: column;
-            }
+    .task-name {
+      flex: 1;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.15s;
+      line-height: 1.35;
+    }
 
-            .stat-box {
-                flex: 1;
-                min-width: 150px;
-            }
+    .task-row.done .task-name {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
 
-            .controls {
-                flex-direction: column;
-            }
+    .task-diff-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
 
-            button {
-                width: 100%;
-            }
-        }
-    </style>
+    .task-diff-dot[data-d="1"] { background: var(--easy); }
+    .task-diff-dot[data-d="2"] { background: var(--medium); }
+    .task-diff-dot[data-d="3"] { background: var(--hard); }
+    .task-diff-dot[data-d="4"] { background: var(--extreme); }
+
+    .task-pts {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .task-row.done .task-pts { color: var(--green); }
+
+    /* ── EMPTY CATEGORY ── */
+    .cat-empty {
+      padding: 18px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+      display: none;
+    }
+
+    /* ── CONTROLS ── */
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      transition: all 0.15s;
+    }
+
+    .btn:hover { border-color: var(--text); color: var(--text); }
+
+    .btn-danger:hover { border-color: var(--extreme); color: var(--extreme); }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    @media (max-width: 600px) {
+      .topbar { padding: 10px 14px; }
+      .diff-hint { display: none; }
+      .categories-grid { grid-template-columns: 1fr; }
+      .main { padding: 16px 12px 50px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Ultimate Slut Checklist</h1>
-            <p>Полный список для взрослых (16+)</p>
-        </div>
 
-        <div class="stats">
-            <div class="stat-box">
-                <span class="stat-number" id="completed">0</span>
-                <span class="stat-label">Завершено</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number" id="total">0</span>
-                <span class="stat-label">Всего</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number" id="percentage">0%</span>
-                <span class="stat-label">Прогресс</span>
-            </div>
-        </div>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-title">Ultimate Checklist</div>
+  <div class="topbar-stats">
+    <div class="topbar-stat">Tasks: <span id="statTasks">0 / 0</span></div>
+    <div class="topbar-stat">Points: <span id="statPoints">0 / 0</span></div>
+  </div>
+  <button class="btn btn-danger" id="resetBtn">Reset</button>
+</div>
 
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
+<!-- DIFFICULTY SELECTOR -->
+<div class="difficulty-bar">
+  <span class="difficulty-label">Difficulty:</span>
+  <button class="diff-btn active" data-level="1">Easy</button>
+  <button class="diff-btn" data-level="2">Medium</button>
+  <button class="diff-btn" data-level="3">Hard</button>
+  <button class="diff-btn" data-level="4">Extreme</button>
+  <span class="diff-hint">Each level includes all easier tasks</span>
+</div>
 
-        <div class="checklist" id="checklist"></div>
-
-        <div class="controls">
-            <button class="btn-primary" id="resetBtn">Сбросить всё</button>
-            <button class="btn-secondary" id="shareBtn">Поделиться</button>
-        </div>
-
-        <div class="footer">
-            <p>Ваш прогресс сохраняется автоматически в браузере</p>
-        </div>
+<!-- MAIN -->
+<div class="main">
+  <div class="global-progress">
+    <div class="progress-track">
+      <div class="progress-fill" id="globalBar" style="width:0%"></div>
     </div>
+    <div class="progress-pct" id="globalPct">0%</div>
+  </div>
 
-    <script>
-        // Контент чеклиста - добавьте ваши вопросы здесь
-        const checklist = [
-            { title: "Поцелуй в губы с страстью", description: "Долгий и глубокий поцелуй с партнёром" },
-            { title: "Секс в необычном месте", description: "Попробуйте в месте, где есть небольшой риск быть обнаруженными" },
-            { title: "Массаж всего тела", description: "Профессиональный или самодельный сеанс расслабления" },
-            { title: "Попробуйте новую позицию", description: "Найдите и попробуйте позицию, которую никогда не пробовали" },
-            { title: "Игра с едой", description: "Используйте пищу как часть интимной активности" },
-            { title: "Романтический ужин", description: "Подготовьте красивый ужин при свечах с любимым" },
-            { title: "Стриптиз для партнёра", description: "Исполните сексуальный танец для партнёра" },
-            { title: "Видеозвонок с партнёром", description: "Интимный видеозвонок на расстояние" },
-            { title: "Белье с сюрпризом", description: "Носите сексуальное нижнее белье под одеждой" },
-            { title: "Признание фантазий", description: "Расскажите партнёру о своих фантазиях" },
-            { title: "Фотосессия", description: "Сделайте сексуальные фото (только для себя!)" },
-            { title: "Ванна вместе", description: "Примите ванну или душ с партнёром" },
-            { title: "Массаж интимный", description: "Специализированный массаж интимных зон" },
-            { title: "Парфюм и запахи", description: "Используйте запахи для возбуждения" },
-            { title: "Словесная игра", description: "Говорите грязное и сексуальное во время близости" },
-            { title: "Спонтанная близость", description: "Спонтанный секс без подготовки" },
-            { title: "Медленная близость", description: "Долгий и нежный секс без спешки" },
-            { title: "Контрастный температурный эффект", description: "Используйте горячие и холодные предметы" },
-            { title: "Исследуйте эрогенные зоны", description: "Изучите чувствительные зоны партнёра" },
-            { title: "Просмотр вместе", description: "Смотрите контент для взрослых вместе с партнёром" },
-        ];
+  <div class="legend">
+    <span>Difficulty:</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--easy)"></span> Easy</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--medium)"></span> Medium</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--hard)"></span> Hard</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--extreme)"></span> Extreme</span>
+  </div>
 
-        const checklistEl = document.getElementById('checklist');
-        const completedEl = document.getElementById('completed');
-        const totalEl = document.getElementById('total');
-        const percentageEl = document.getElementById('percentage');
-        const progressFill = document.getElementById('progressFill');
-        const resetBtn = document.getElementById('resetBtn');
-        const shareBtn = document.getElementById('shareBtn');
+  <div class="categories-grid" id="grid"></div>
+</div>
 
-        let completed = {};
+<script>
+// ═══════════════════════════════════════════════════
+//  CONSTANTS для вашего формата заданий
+// ═══════════════════════════════════════════════════
+const difficulties = {
+  easy: { level: 1 },
+  medium: { level: 2 },
+  hard: { level: 3 },
+  extreme: { level: 4 }
+};
 
-        // Загрузить данные из localStorage
-        function loadProgress() {
-            const saved = localStorage.getItem('checklistProgress');
-            if (saved) {
-                completed = JSON.parse(saved);
-            }
-        }
+const modes = {
+  monogamous: { level: 1 },
+  single: { level: 2 },
+  swinger: { level: 3 }
+};
 
-        // Сохранить данные в localStorage
-        function saveProgress() {
-            localStorage.setItem('checklistProgress', JSON.stringify(completed));
-        }
+const tags = {
+  exposition: 'exposition',
+  public: 'public',
+  bdsm: 'bdsm',
+  submission: 'submission'
+};
 
-        // Обновить статистику
-        function updateStats() {
-            const completedCount = Object.values(completed).filter(Boolean).length;
-            const totalCount = checklist.length;
-            const percentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+// ═══════════════════════════════════════════════════
+//  DATA — добавляй задания сюда
+//  difficulty: 1=Easy, 2=Medium, 3=Hard, 4=Extreme
+//  mode: 1=Monogamous, 2=Single, 3=Swinger (reserved)
+// ═══════════════════════════════════════════════════
+const categories = {
+  misc:        { name: "Sex and miscellaneous" },
+  oral:        { name: "Oral" },
+  anal:        { name: "Anal" },
+  orgasms:     { name: "Orgasms" },
+  multiPen:    { name: "Multi penetration" },
+  places:      { name: "Places" },
+  toys:        { name: "Toys" },
+  photos:      { name: "Photos / Videos", description: "(you or someone took this of you)" },
+  cum:         { name: "Cum" },
+  positions:   { name: "Positions" },
+  clothing:    { name: "Clothing", description: "(at least one person saw you in this)" },
+  bdsm:        { name: "BDSM" },
+  public:      { name: "Public", description: "(outside your house, people could be around)" },
+  group:       { name: "Group sex" },
+  hotwife:     { name: "Hotwife", description: "(while having a boyfriend)" },
+  lesbian:     { name: "Lesbian" },
+  bodycount:   { name: "Bodycount" },
+  cybersex:    { name: "Cybersex" },
+  exposition:  { name: "Exposition", description: "(photos sent to men other than your partner)" },
+  games:       { name: "Games", description: "(naughty games you have played)" },
+  femdom:      { name: "Femdom" },
+  sizeQueen:   { name: "Size Queen" },
+  collection:  { name: "Collection", description: "(things you still have in your possession)" },
+};
 
-            completedEl.textContent = completedCount;
-            totalEl.textContent = totalCount;
-            percentageEl.textContent = percentage + '%';
-            progressFill.style.width = percentage + '%';
-        }
+// Задания — используйте этот формат для добавления новых заданий
+const tasks = [
+  // ── Misc ──
+  {
+    name: "Gave a striptease",
+    points: 1,
+    category: categories.misc.name,
+    mode: modes.monogamous.level,
+    difficulty: difficulties.easy.level,
+  },
+  { name: "Gave a boobjob",                     points: 1, category: "misc",      difficulty: 1 },
+  { name: "Gave a handjob",                     points: 1, category: "misc",      difficulty: 1 },
+  { name: "Had sex",                            points: 1, category: "misc",      difficulty: 1 },
+  { name: "Had sex 2 times in a day",           points: 2, category: "misc",      difficulty: 1 },
+  { name: "Had sex once a day for a week",      points: 2, category: "misc",      difficulty: 2 },
+  { name: "Had sex while on your period",       points: 2, category: "misc",      difficulty: 2 },
+  { name: "Had drunken sex",                    points: 4, category: "misc",      difficulty: 2 },
 
-        // Рендерить чеклист
-        function renderChecklist() {
-            checklistEl.innerHTML = '';
-            checklist.forEach((item, index) => {
-                const isCompleted = completed[index] || false;
-                const itemEl = document.createElement('div');
-                itemEl.className = 'checklist-item' + (isCompleted ? ' completed' : '');
-                itemEl.innerHTML = `
-                    <div class="checkbox"></div>
-                    <div class="item-content">
-                        <div class="item-number">Пункт ${index + 1}</div>
-                        <div class="item-title">${item.title}</div>
-                        <div class="item-description">${item.description}</div>
-                    </div>
-                `;
-                itemEl.addEventListener('click', () => {
-                    completed[index] = !completed[index];
-                    saveProgress();
-                    renderChecklist();
-                    updateStats();
-                });
-                checklistEl.appendChild(itemEl);
-            });
-        }
+  // ── Anal ──
+  { name: "Had anal sex",                       points: 2, category: "anal",      difficulty: 2 },
+  { name: "Inserted buttplug",                  points: 2, category: "anal",      difficulty: 1 },
+  { name: "Inserted buttplug for 1 hour",       points: 3, category: "anal",      difficulty: 2 },
+  { name: "Inserted buttplug for a whole day",  points: 4, category: "anal",      difficulty: 3 },
+  { name: "Took 2 dicks in the ass",            points: 8, category: "anal",      difficulty: 4 },
 
-        // Сбросить всё
-        resetBtn.addEventListener('click', () => {
-            if (confirm('Вы уверены? Это удалит весь прогресс.')) {
-                completed = {};
-                saveProgress();
-                renderChecklist();
-                updateStats();
-            }
-        });
+  // ── Orgasms ──
+  { name: "Had an orgasm",                      points: 1, category: "orgasms",   difficulty: 1 },
+  { name: "Had 5 orgasms in a session",         points: 3, category: "orgasms",   difficulty: 2 },
+  { name: "Had 2 orgasms per day for a month",  points: 4, category: "orgasms",   difficulty: 3 },
 
-        // Поделиться
-        shareBtn.addEventListener('click', () => {
-            const completedCount = Object.values(completed).filter(Boolean).length;
-            const totalCount = checklist.length;
-            const percentage = Math.round((completedCount / totalCount) * 100);
-            const text = `Я завершил ${completedCount} из ${totalCount} пунктов (${percentage}%) в Ultimate Slut Checklist RU! 🎉`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Ultimate Slut Checklist RU',
-                    text: text
-                });
-            } else {
-                alert(text + '\n\nСкопировано в буфер обмена!');
-                navigator.clipboard.writeText(text);
-            }
-        });
+  // ── Multi penetration ──
+  { name: "Had 2 holes filled at once",         points: 6, category: "multiPen",  difficulty: 3 },
 
-        // Инициализация
-        loadProgress();
-        renderChecklist();
-        updateStats();
-    </script>
+  // ── Oral ──
+  { name: "Gave a blowjob",                     points: 1, category: "oral",      difficulty: 1 },
+  { name: "Swallowed",                          points: 2, category: "oral",      difficulty: 2 },
+  { name: "Deepthroat",                         points: 3, category: "oral",      difficulty: 3 },
+  { name: "Received cunnilingus",               points: 1, category: "oral",      difficulty: 1 },
+
+  // ── Places ──
+  { name: "Bedroom",                            points: 1, category: "places",    difficulty: 1 },
+  { name: "Bathroom",                           points: 1, category: "places",    difficulty: 1 },
+  { name: "Living room",                        points: 1, category: "places",    difficulty: 1 },
+  { name: "Kitchen",                            points: 1, category: "places",    difficulty: 1 },
+  { name: "In a tent",                          points: 2, category: "places",    difficulty: 2 },
+  { name: "On a boat",                          points: 3, category: "places",    difficulty: 2 },
+  { name: "Jacuzzi / pool",                     points: 2, category: "places",    difficulty: 2 },
+  { name: "Hotel balcony",                      points: 3, category: "places",    difficulty: 3 },
+  { name: "Park",                               points: 4, category: "places",    difficulty: 3 },
+  { name: "Beach",                              points: 4, category: "places",    difficulty: 3 },
+
+  // ── Toys ──
+  { name: "Used a dildo",                       points: 1, category: "toys",      difficulty: 1 },
+  { name: "Used a vibrator",                    points: 1, category: "toys",      difficulty: 1 },
+  { name: "Used a wand massager",               points: 2, category: "toys",      difficulty: 2 },
+  { name: "Used a strap-on",                    points: 3, category: "toys",      difficulty: 3 },
+
+  // ── Photos / Videos ──
+  { name: "Took a nude photo of yourself",      points: 1, category: "photos",    difficulty: 1 },
+  { name: "Filmed yourself having sex",         points: 3, category: "photos",    difficulty: 2 },
+  { name: "Sent a nude to someone",             points: 2, category: "photos",    difficulty: 1 },
+
+  // ── BDSM ──
+  { name: "Used a blindfold",                   points: 1, category: "bdsm",      difficulty: 1 },
+  { name: "Used handcuffs / restraints",        points: 2, category: "bdsm",      difficulty: 2 },
+  { name: "Got spanked",                        points: 2, category: "bdsm",      difficulty: 2 },
+  { name: "Used a whip / flogger",              points: 3, category: "bdsm",      difficulty: 3 },
+  { name: "Full bondage session",               points: 5, category: "bdsm",      difficulty: 4 },
+
+  // ── Public ──
+  { name: "Flashed someone",                    points: 2, category: "public",    difficulty: 2 },
+  { name: "Had sex in public",                  points: 5, category: "public",    difficulty: 3 },
+  { name: "Gave head in public",                points: 4, category: "public",    difficulty: 3 },
+
+  // ── Group ──
+  { name: "Had a threesome (FFM)",              points: 4, category: "group",     difficulty: 3 },
+  { name: "Had a threesome (FMM)",              points: 4, category: "group",     difficulty: 3 },
+  { name: "Had an orgy (4+ people)",            points: 8, category: "group",     difficulty: 4 },
+
+  // ── Bodycount ──
+  { name: "5+ partners",                        points: 2, category: "bodycount", difficulty: 2 },
+  { name: "10+ partners",                       points: 4, category: "bodycount", difficulty: 3 },
+  { name: "25+ partners",                       points: 8, category: "bodycount", difficulty: 4 },
+
+  // ── Cybersex ──
+  { name: "Sexted someone",                     points: 1, category: "cybersex",  difficulty: 1 },
+  { name: "Had a video sex call",               points: 2, category: "cybersex",  difficulty: 2 },
+
+  // ── Games ──
+  { name: "Played strip poker / card game",     points: 2, category: "games",     difficulty: 2 },
+  { name: "Played truth or dare (sexual)",      points: 2, category: "games",     difficulty: 2 },
+
+  // ── Exposition ──
+  { name: "Sent a boudoir album to a stranger", points: 8, category: "photos",    difficulty: 3 },
+  { name: "Uploaded a boudoir album online",    points: 16, category: "photos",   difficulty: 3 },
+];
+
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+let currentDiff = 1; // active max difficulty level
+let checked = {};    // { taskIndex: true/false }
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('uc_state');
+    if (s) { const p = JSON.parse(s); checked = p.checked || {}; currentDiff = p.diff || 1; }
+  } catch(e) {}
+}
+
+function saveState() {
+  localStorage.setItem('uc_state', JSON.stringify({ checked, diff: currentDiff }));
+}
+
+// ═══════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════
+function visibleTasks() {
+  return tasks.filter(t => t.difficulty <= currentDiff);
+}
+
+function taskId(index) { return 'task_' + index; }
+
+// ═══════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════
+function render() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  const visible = visibleTasks();
+  
+  // Найдём обратное соответствие: название категории -> ключ
+  const catNameToKey = {};
+  Object.entries(categories).forEach(([key, val]) => {
+    catNameToKey[val.name] = key;
+  });
+
+  // group by category preserving order
+  const catOrder = Object.keys(categories);
+  const grouped = {};
+  catOrder.forEach(k => grouped[k] = []);
+  tasks.forEach((t, idx) => {
+    if (t.difficulty <= currentDiff) {
+      const catKey = catNameToKey[t.category] || t.category;
+      grouped[catKey]?.push({ task: t, idx });
+    }
+  });
+
+  catOrder.forEach(catKey => {
+    const items = grouped[catKey];
+    const catDef = categories[catKey];
+    if (!catDef) return;
+
+    // always show category card (even empty, hide empty msg)
+    const totalPts = items.reduce((s, { task }) => s + task.points, 0);
+    const donePts  = items.reduce((s, { task, idx }) => s + (checked[taskId(idx)] ? task.points : 0), 0);
+    const doneCount = items.filter(({ idx }) => checked[taskId(idx)]).length;
+    const pct = items.length ? Math.round(doneCount / items.length * 100) : 0;
+
+    const card = document.createElement('div');
+    card.className = 'category-card';
+
+    card.innerHTML = `
+      <div class="category-header">
+        <div>
+          <div class="category-name">${catDef.name}</div>
+          ${catDef.description ? `<div class="category-desc">${catDef.description}</div>` : ''}
+        </div>
+        <div class="category-meta">
+          <span>${doneCount} / ${items.length}</span>
+          <span class="pts">${donePts} / ${totalPts} pts</span>
+        </div>
+      </div>
+      <div class="category-progress">
+        <div class="category-progress-fill" style="width:${pct}%"></div>
+      </div>
+      <div class="task-list" id="cat-${catKey}"></div>
+      ${items.length === 0 ? `<div class="cat-empty" style="display:block">No tasks at this difficulty</div>` : ''}
+    `;
+
+    grid.appendChild(card);
+
+    const list = card.querySelector(`#cat-${catKey}`);
+    items.forEach(({ task, idx }) => {
+      const id = taskId(idx);
+      const done = !!checked[id];
+
+      const row = document.createElement('div');
+      row.className = 'task-row' + (done ? ' done' : '');
+      row.innerHTML = `
+        <div class="task-check"></div>
+        <span class="task-diff-dot" data-d="${task.difficulty}"></span>
+        <span class="task-name">${task.name}</span>
+        <span class="task-pts">${task.points} pt${task.points !== 1 ? 's' : ''}</span>
+      `;
+      row.addEventListener('click', () => {
+        checked[id] = !checked[id];
+        saveState();
+        render();
+      });
+      list.appendChild(row);
+    });
+  });
+
+  updateGlobal(visible);
+}
+
+function updateGlobal(visible) {
+  const total = visible.length;
+  const done  = visible.filter((t, i) => {
+    // find original index
+    const origIdx = tasks.indexOf(t);
+    return checked[taskId(origIdx)];
+  }).length;
+  const totalPts = visible.reduce((s, t) => s + t.points, 0);
+  const donePts  = visible.reduce((s, t) => {
+    const origIdx = tasks.indexOf(t);
+    return s + (checked[taskId(origIdx)] ? t.points : 0);
+  }, 0);
+  const pct = total ? Math.round(done / total * 100) : 0;
+
+  document.getElementById('statTasks').textContent  = `${done} / ${total}`;
+  document.getElementById('statPoints').textContent = `${donePts} / ${totalPts}`;
+  document.getElementById('globalBar').style.width  = pct + '%';
+  document.getElementById('globalPct').textContent  = pct + '%';
+}
+
+// ═══════════════════════════════════════════
+//  DIFFICULTY BUTTONS
+// ═══════════════════════════════════════════
+document.querySelectorAll('.diff-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentDiff = parseInt(btn.dataset.level);
+    document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    saveState();
+    render();
+  });
+});
+
+// ═══════════════════════════════════════════
+//  RESET
+// ═══════════════════════════════════════════
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (confirm('Reset all progress?')) {
+    checked = {};
+    saveState();
+    render();
+  }
+});
+
+// ═══════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════
+loadState();
+// sync active button to loaded diff
+document.querySelectorAll('.diff-btn').forEach(b => {
+  b.classList.toggle('active', parseInt(b.dataset.level) === currentDiff);
+});
+render();
+</script>
 </body>
 </html>
