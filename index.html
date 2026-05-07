@@ -30,7 +30,6 @@
       min-height: 100vh;
     }
 
-    /* ── TOP BAR ── */
     .topbar {
       position: sticky;
       top: 0;
@@ -64,7 +63,6 @@
     .topbar-stat { color: var(--muted); }
     .topbar-stat span { color: var(--text); font-weight: 500; }
 
-    /* ── DIFFICULTY SELECTOR ── */
     .difficulty-bar {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -99,26 +97,19 @@
     }
 
     .diff-btn:hover { border-color: var(--text); color: var(--text); }
-
     .diff-btn.active[data-level="1"] { background: var(--easy); border-color: var(--easy); color: #000; }
     .diff-btn.active[data-level="2"] { background: var(--medium); border-color: var(--medium); color: #000; }
     .diff-btn.active[data-level="3"] { background: var(--hard); border-color: var(--hard); color: #000; }
     .diff-btn.active[data-level="4"] { background: var(--extreme); border-color: var(--extreme); color: #fff; }
 
-    .diff-hint {
-      font-size: 0.72rem;
-      color: var(--muted);
-      margin-left: auto;
-    }
+    .diff-hint { font-size: 0.72rem; color: var(--muted); margin-left: auto; }
 
-    /* ── MAIN LAYOUT ── */
     .main {
       padding: 28px 20px 60px;
       max-width: 1400px;
       margin: 0 auto;
     }
 
-    /* ── GLOBAL PROGRESS ── */
     .global-progress {
       display: flex;
       align-items: center;
@@ -148,7 +139,6 @@
       min-width: 40px;
     }
 
-    /* ── CATEGORIES GRID ── */
     .categories-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -200,22 +190,14 @@
 
     .category-meta .pts { color: var(--accent); }
 
-    /* ── CATEGORY PROGRESS BAR ── */
-    .category-progress {
-      height: 2px;
-      background: var(--border);
-    }
-
+    .category-progress { height: 2px; background: var(--border); }
     .category-progress-fill {
       height: 100%;
       background: var(--accent);
       transition: width 0.3s ease;
     }
 
-    /* ── TASK LIST ── */
-    .task-list {
-      padding: 6px 0;
-    }
+    .task-list { padding: 6px 0; }
 
     .task-row {
       display: flex;
@@ -228,7 +210,6 @@
     }
 
     .task-row:hover { background: var(--surface2); }
-
     .task-row:last-child { border-bottom: none; }
 
     .task-check {
@@ -269,10 +250,7 @@
       line-height: 1.35;
     }
 
-    .task-row.done .task-name {
-      color: var(--muted);
-      text-decoration: line-through;
-    }
+    .task-row.done .task-name { color: var(--muted); text-decoration: line-through; }
 
     .task-diff-dot {
       width: 6px;
@@ -295,22 +273,12 @@
 
     .task-row.done .task-pts { color: var(--green); }
 
-    /* ── EMPTY CATEGORY ── */
     .cat-empty {
       padding: 18px;
       font-size: 0.8rem;
       color: var(--muted);
       text-align: center;
       display: none;
-    }
-
-    /* ── CONTROLS ── */
-    .controls {
-      display: flex;
-      gap: 10px;
-      margin-top: 32px;
-      justify-content: center;
-      flex-wrap: wrap;
     }
 
     .btn {
@@ -329,10 +297,8 @@
     }
 
     .btn:hover { border-color: var(--text); color: var(--text); }
-
     .btn-danger:hover { border-color: var(--extreme); color: var(--extreme); }
 
-    /* ── LEGEND ── */
     .legend {
       display: flex;
       gap: 16px;
@@ -343,16 +309,8 @@
       color: var(--muted);
     }
 
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .legend-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-    }
+    .legend-item { display: flex; align-items: center; gap: 5px; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
     @media (max-width: 600px) {
       .topbar { padding: 10px 14px; }
@@ -364,7 +322,6 @@
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-title">Ultimate Checklist</div>
   <div class="topbar-stats">
@@ -374,7 +331,6 @@
   <button class="btn btn-danger" id="resetBtn">Reset</button>
 </div>
 
-<!-- DIFFICULTY SELECTOR -->
 <div class="difficulty-bar">
   <span class="difficulty-label">Difficulty:</span>
   <button class="diff-btn active" data-level="1">Easy</button>
@@ -384,7 +340,6 @@
   <span class="diff-hint">Each level includes all easier tasks</span>
 </div>
 
-<!-- MAIN -->
 <div class="main">
   <div class="global-progress">
     <div class="progress-track">
@@ -405,33 +360,6 @@
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════
-//  CONSTANTS для вашего формата заданий
-// ═══════════════════════════════════════════════════
-const difficulties = {
-  easy: { level: 1 },
-  medium: { level: 2 },
-  hard: { level: 3 },
-  extreme: { level: 4 }
-};
-
-const modes = {
-  monogamous: { level: 1 },
-  single: { level: 2 },
-  swinger: { level: 3 }
-};
-
-const tags = {
-  exposition: 'exposition',
-  public: 'public',
-  bdsm: 'bdsm'
-};
-
-// ═══════════════════════════════════════════════════
-//  DATA — добавляй задания сюда
-//  difficulty: 1=Easy, 2=Medium, 3=Hard, 4=Extreme
-//  mode: 1=Monogamous, 2=Single, 3=Swinger (reserved)
-// ═══════════════════════════════════════════════════
 const categories = {
   misc:        { name: "Sex and miscellaneous" },
   oral:        { name: "Oral" },
@@ -461,10 +389,9 @@ const categories = {
   cuckquean:   { name: "Cuckquean", description: "(Things done by your boyfriend)" },
 };
 
-// Задания — category: ключ из объекта выше
 const tasks = [
   // ── Misc ──
-      { name: "Gave a striptease", points: 1, category: "misc", difficulty: 1 },
+  { name: "Gave a striptease", points: 1, category: "misc", difficulty: 1 },
   { name: "Gave a boobjob", points: 1, category: "misc", difficulty: 1 },
   { name: "Gave a handjob", points: 1, category: "misc", difficulty: 1 },
   { name: "Had sex", points: 1, category: "misc", difficulty: 1 },
@@ -482,6 +409,7 @@ const tasks = [
   { name: "Had drunken sex", points: 4, category: "misc", difficulty: 1 },
   { name: "Had sex when you were passed out", points: 6, category: "misc", difficulty: 2 },
   { name: "Went back to your home without cleaning up", points: 4, category: "misc", difficulty: 1 },
+  // ── Oral ──
   { name: "Gave a blowjob", points: 1, category: "oral", difficulty: 1 },
   { name: "Licked balls", points: 1, category: "oral", difficulty: 1 },
   { name: "Made a guy cum only from blowjob", points: 2, category: "oral", difficulty: 1 },
@@ -494,6 +422,7 @@ const tasks = [
   { name: "Deepthroated a total time of 30 minutes in a day", points: 4, category: "oral", difficulty: 2 },
   { name: "Gave analingus to someone", points: 3, category: "oral", difficulty: 2 },
   { name: "Gave analingus while inserting your tongue as far as possible", points: 4, category: "oral", difficulty: 2 },
+  // ── Anal ──
   { name: "Had anal sex", points: 2, category: "anal", difficulty: 1 },
   { name: "Had anal sex twice in a day", points: 4, category: "anal", difficulty: 2 },
   { name: "Had anal sex once a day for a week", points: 6, category: "anal", difficulty: 2 },
@@ -501,11 +430,12 @@ const tasks = [
   { name: "Inserted buttplug", points: 2, category: "anal", difficulty: 1 },
   { name: "Inserted buttplug for 1 hour", points: 3, category: "anal", difficulty: 1 },
   { name: "Inserted buttplug for a whole day", points: 4, category: "anal", difficulty: 2 },
-  { name: "Inserted medium buttplug (2.5\", points: 6, category: "anal", difficulty: 3 },
-  { name: "Inserted a large buttplug (3\", points: 8, category: "anal", difficulty: 4 },
+  { name: 'Inserted medium buttplug (2.5")', points: 6, category: "anal", difficulty: 3 },
+  { name: 'Inserted a large buttplug (3")', points: 8, category: "anal", difficulty: 4 },
   { name: "Inserted anal beads all the way", points: 4, category: "anal", difficulty: 2 },
-  { name: "Inserted medium anal beads (2\", points: 6, category: "anal", difficulty: 3 },
-  { name: "Inserted large anal beads (2.5\", points: 8, category: "anal", difficulty: 4 },
+  { name: 'Inserted medium anal beads (2")', points: 6, category: "anal", difficulty: 3 },
+  { name: 'Inserted large anal beads (2.5")', points: 8, category: "anal", difficulty: 4 },
+  // ── Orgasms ──
   { name: "Had an orgasm", points: 1, category: "orgasms", difficulty: 1 },
   { name: "Had an orgasm from anal", points: 4, category: "orgasms", difficulty: 2 },
   { name: "Had an orgasm without stimulating pussy or ass", points: 6, category: "orgasms", difficulty: 3 },
@@ -513,11 +443,13 @@ const tasks = [
   { name: "Had 10 orgasms in a day", points: 5, category: "orgasms", difficulty: 2 },
   { name: "Had 2 orgasms per day for a month", points: 4, category: "orgasms", difficulty: 1 },
   { name: "Had 25 orgasms in a day", points: 8, category: "orgasms", difficulty: 3 },
+  // ── Multi Pen ──
   { name: "Had your mouth and pussy filled at the same time", points: 2, category: "multiPen", difficulty: 1 },
   { name: "Had your mouth and ass filled at the same time", points: 3, category: "multiPen", difficulty: 2 },
   { name: "Had your pussy and ass filled at the same time", points: 4, category: "multiPen", difficulty: 2 },
   { name: "Had your mouth, pussy and ass filled at the same time", points: 6, category: "multiPen", difficulty: 3 },
   { name: "Did double vaginal penetration", points: 8, category: "multiPen", difficulty: 3 },
+  // ── Public ──
   { name: "Went without underwear in public", points: 1, category: "public", difficulty: 1 },
   { name: "Wore skimpy clothing without underwear in public", points: 2, category: "public", difficulty: 1 },
   { name: "Flashed boobs in public", points: 2, category: "public", difficulty: 1 },
@@ -531,6 +463,7 @@ const tasks = [
   { name: "Had cum on your face in public", points: 8, category: "public", difficulty: 3 },
   { name: "Ordered food while having cum in your mouth", points: 7, category: "public", difficulty: 3 },
   { name: "Got completely naked in public", points: 10, category: "public", difficulty: 4 },
+  // ── Photos ──
   { name: "Photo of you in lingerie", points: 1, category: "photos", difficulty: 1 },
   { name: "Photo of your boobs", points: 1, category: "photos", difficulty: 1 },
   { name: "Photo of your pussy", points: 1, category: "photos", difficulty: 1 },
@@ -567,10 +500,11 @@ const tasks = [
   { name: "Video of you in a gokkun", points: 12, category: "photos", difficulty: 4 },
   { name: "Video of you tied up with 4+ dicks", points: 12, category: "photos", difficulty: 4 },
   { name: "Video of you playing guess the cock", points: 12, category: "photos", difficulty: 4 },
+  // ── Cum ──
   { name: "Got cum on your ass", points: 2, category: "cum", difficulty: 1 },
   { name: "Got cum on your tits", points: 2, category: "cum", difficulty: 1 },
   { name: "Got cum on your belly", points: 2, category: "cum", difficulty: 1 },
-  { name: "Got  cum on your feet", points: 2, category: "cum", difficulty: 1 },
+  { name: "Got cum on your feet", points: 2, category: "cum", difficulty: 1 },
   { name: "Got cum on your face", points: 3, category: "cum", difficulty: 1 },
   { name: "Got cum in your mouth", points: 3, category: "cum", difficulty: 1 },
   { name: "Swallowed cum", points: 4, category: "cum", difficulty: 1 },
@@ -592,21 +526,23 @@ const tasks = [
   { name: "Spread cum on your face and let it dry", points: 8, category: "cum", difficulty: 3 },
   { name: "Wore cum filled panties for a day", points: 10, category: "cum", difficulty: 3 },
   { name: "Sucked a cumcicle to completion", points: 12, category: "cum", difficulty: 4 },
-  { name: "Fully took a 7\", points: 3, category: "sizeQueen", difficulty: 2 },
-  { name: "Fully took an 8\", points: 4, category: "sizeQueen", difficulty: 2 },
-  { name: "Fully Took a 9\", points: 6, category: "sizeQueen", difficulty: 3 },
-  { name: "Fully took a 11\", points: 8, category: "sizeQueen", difficulty: 4 },
-  { name: "Took a 6.5\", points: 2, category: "sizeQueen", difficulty: 2 },
-  { name: "Took a 7.5\", points: 4, category: "sizeQueen", difficulty: 3 },
-  { name: "Took a 8.5\", points: 6, category: "sizeQueen", difficulty: 4 },
-  { name: "Fully deepthroated a 7\", points: 2, category: "sizeQueen", difficulty: 2 },
-  { name: "Fully deepthroated an 8\", points: 4, category: "sizeQueen", difficulty: 2 },
-  { name: "Fully deepthroated an 9\", points: 6, category: "sizeQueen", difficulty: 3 },
-  { name: "Fully deepthroated an 11\", points: 8, category: "sizeQueen", difficulty: 4 },
+  // ── Size Queen ──
+  { name: 'Fully took a 7"', points: 3, category: "sizeQueen", difficulty: 2 },
+  { name: 'Fully took an 8"', points: 4, category: "sizeQueen", difficulty: 2 },
+  { name: 'Fully Took a 9"', points: 6, category: "sizeQueen", difficulty: 3 },
+  { name: 'Fully took a 11"', points: 8, category: "sizeQueen", difficulty: 4 },
+  { name: 'Took a 6.5" girth', points: 2, category: "sizeQueen", difficulty: 2 },
+  { name: 'Took a 7.5" girth', points: 4, category: "sizeQueen", difficulty: 3 },
+  { name: 'Took a 8.5" girth', points: 6, category: "sizeQueen", difficulty: 4 },
+  { name: 'Fully deepthroated a 7"', points: 2, category: "sizeQueen", difficulty: 2 },
+  { name: 'Fully deepthroated an 8"', points: 4, category: "sizeQueen", difficulty: 2 },
+  { name: 'Fully deepthroated an 9"', points: 6, category: "sizeQueen", difficulty: 3 },
+  { name: 'Fully deepthroated an 11"', points: 8, category: "sizeQueen", difficulty: 4 },
   { name: "Took 16+ inch anal snake", points: 10, category: "sizeQueen", difficulty: 4 },
   { name: "Got fisted", points: 10, category: "sizeQueen", difficulty: 4 },
-  { name: "Had pussy gape of 1\", points: 10, category: "sizeQueen", difficulty: 4 },
-  { name: "Had anal gape of 1\", points: 12, category: "sizeQueen", difficulty: 4 },
+  { name: 'Had pussy gape of 1"', points: 10, category: "sizeQueen", difficulty: 4 },
+  { name: 'Had anal gape of 1"', points: 12, category: "sizeQueen", difficulty: 4 },
+  // ── Positions ──
   { name: "Missionary", points: 1, category: "positions", difficulty: 1 },
   { name: "69", points: 1, category: "positions", difficulty: 1 },
   { name: "Doggy style", points: 1, category: "positions", difficulty: 1 },
@@ -628,6 +564,7 @@ const tasks = [
   { name: "The lap top", points: 1, category: "positions", difficulty: 1 },
   { name: "The right angle", points: 1, category: "positions", difficulty: 1 },
   { name: "Completed a kamasutra book", points: 10, category: "positions", difficulty: 2 },
+  // ── Places ──
   { name: "Bedroom", points: 1, category: "places", difficulty: 1 },
   { name: "Bathroom", points: 1, category: "places", difficulty: 1 },
   { name: "Living room", points: 1, category: "places", difficulty: 1 },
@@ -656,6 +593,7 @@ const tasks = [
   { name: "Library", points: 6, category: "places", difficulty: 3 },
   { name: "Train/Bus", points: 6, category: "places", difficulty: 3 },
   { name: "Adult cinema", points: 8, category: "places", difficulty: 3 },
+  // ── Toys ──
   { name: "Dildo", points: 1, category: "toys", difficulty: 1 },
   { name: "Realistic dildo", points: 1, category: "toys", difficulty: 1 },
   { name: "Glass dildo", points: 1, category: "toys", difficulty: 1 },
@@ -677,6 +615,7 @@ const tasks = [
   { name: "Household object", points: 2, category: "toys", difficulty: 1 },
   { name: "Fuck machine", points: 4, category: "toys", difficulty: 2 },
   { name: "Ride-on vibrator (MotorBunny)", points: 6, category: "toys", difficulty: 3 },
+  // ── Clothing ──
   { name: "Wore bra & string", points: 1, category: "clothing", difficulty: 1 },
   { name: "Wore a corset", points: 1, category: "clothing", difficulty: 1 },
   { name: "Wore lingerie set/bodystocking", points: 1, category: "clothing", difficulty: 1 },
@@ -688,12 +627,12 @@ const tasks = [
   { name: "Wore candy underwear", points: 2, category: "clothing", difficulty: 1 },
   { name: "Wore a cosplay", points: 2, category: "clothing", difficulty: 1 },
   { name: "Wore no underwear while in public", points: 2, category: "clothing", difficulty: 1 },
-  { name: "Wore no underwear while in public", points: 2, category: "clothing", difficulty: 1 },
   { name: "Wore micro-bikini", points: 3, category: "clothing", difficulty: 1 },
   { name: "Wore shorts and top that are too small without underwear in public", points: 4, category: "clothing", difficulty: 1 },
   { name: "Wore micro-skirt without underwear in public", points: 4, category: "clothing", difficulty: 2 },
   { name: "Wore underboob croptop in public", points: 4, category: "clothing", difficulty: 2 },
   { name: "Wore pants with hole in genital area in public", points: 5, category: "clothing", difficulty: 3 },
+  // ── BDSM ──
   { name: "Had sex while tied up", points: 2, category: "bdsm", difficulty: 1 },
   { name: "Had blindfolded sex", points: 1, category: "bdsm", difficulty: 1 },
   { name: "Been a slave for 2 hours", points: 3, category: "bdsm", difficulty: 1 },
@@ -719,6 +658,7 @@ const tasks = [
   { name: "Denied while in chastity for 1 month", points: 8, category: "bdsm", difficulty: 4 },
   { name: "Did wax play", points: 3, category: "bdsm", difficulty: 2 },
   { name: "Did ice play", points: 3, category: "bdsm", difficulty: 2 },
+  // ── Bodycount ──
   { name: "Had sex with 3+ different guys", points: 2, category: "bodycount", difficulty: 1 },
   { name: "Had sex with 10+ different guys", points: 4, category: "bodycount", difficulty: 2 },
   { name: "Had sex with 25+ different guys", points: 6, category: "bodycount", difficulty: 2 },
@@ -730,6 +670,7 @@ const tasks = [
   { name: "Had sex with 5+ different guys in a week", points: 3, category: "bodycount", difficulty: 2 },
   { name: "Had sex with 15+ different guys in a month", points: 10, category: "bodycount", difficulty: 3 },
   { name: "Had sex with 30+ different guys in a month", points: 16, category: "bodycount", difficulty: 4 },
+  // ── Collection ──
   { name: "3+ sex toys", points: 1, category: "collection", difficulty: 1 },
   { name: "6+ sex toys", points: 2, category: "collection", difficulty: 1 },
   { name: "12+ sex toys", points: 3, category: "collection", difficulty: 2 },
@@ -751,7 +692,7 @@ const tasks = [
   { name: "3+ videos having sex with different men", points: 2, category: "collection", difficulty: 2 },
   { name: "10+ videos having sex with different men", points: 4, category: "collection", difficulty: 3 },
   { name: "25+ videos having sex with different men", points: 6, category: "collection", difficulty: 4 },
-  { name: "1+ sex trophy from a man (Object taken from a hookup, often a piece of clothing)", points: 1, category: "collection", difficulty: 1 },
+  { name: "1+ sex trophy from a man", points: 1, category: "collection", difficulty: 1 },
   { name: "3+ sex trophies from different men", points: 2, category: "collection", difficulty: 2 },
   { name: "10+ sex trophies from different men", points: 4, category: "collection", difficulty: 3 },
   { name: "25+ sex trophies from different men", points: 6, category: "collection", difficulty: 4 },
@@ -760,6 +701,7 @@ const tasks = [
   { name: "10+ used condoms", points: 6, category: "collection", difficulty: 4 },
   { name: "A photo of you wearing a used condom skirt", points: 12, category: "collection", difficulty: 4 },
   { name: "A journal of all the men you had sex with", points: 6, category: "collection", difficulty: 3 },
+  // ── Cybersex ──
   { name: "Sexted with someone", points: 1, category: "cybersex", difficulty: 1 },
   { name: "Sexted with someone you never met before", points: 2, category: "cybersex", difficulty: 2 },
   { name: "Exchanged naked/sexy pictures with someone", points: 2, category: "cybersex", difficulty: 1 },
@@ -774,10 +716,11 @@ const tasks = [
   { name: "Made someone cum on Omegle or similar", points: 8, category: "cybersex", difficulty: 3 },
   { name: "Did live sex camming", points: 10, category: "cybersex", difficulty: 4 },
   { name: "Did live sex camming regularly (Made more than 500$)", points: 16, category: "cybersex", difficulty: 4 },
+  // ── Dogging ──
   { name: "Dogging in a motel", points: 1, category: "dogging", difficulty: 1 },
   { name: "Dogging in a car", points: 2, category: "dogging", difficulty: 1 },
-  { name: "Dogging n a car with doors open", points: 4, category: "dogging", difficulty: 1 },
-  { name: "Dogging outside", points: 6, category: "categories.dogging.name", difficulty: 2 },
+  { name: "Dogging in a car with doors open", points: 4, category: "dogging", difficulty: 1 },
+  { name: "Dogging outside", points: 6, category: "dogging", difficulty: 2 },
   { name: "Been watched by a woman", points: 2, category: "dogging", difficulty: 1 },
   { name: "Been watched by a man", points: 3, category: "dogging", difficulty: 1 },
   { name: "Been watched by a couple", points: 4, category: "dogging", difficulty: 1 },
@@ -791,6 +734,7 @@ const tasks = [
   { name: "Received cum from another person", points: 8, category: "dogging", difficulty: 3 },
   { name: "Received cum from a group of 4+ people", points: 12, category: "dogging", difficulty: 4 },
   { name: "Received cum from a group of 10+ people", points: 16, category: "dogging", difficulty: 4 },
+  // ── Swinging ──
   { name: "Gave handjob to another man", points: 1, category: "swinging", difficulty: 1 },
   { name: "Sucked another man", points: 2, category: "swinging", difficulty: 1 },
   { name: "Had sex with another man", points: 3, category: "swinging", difficulty: 1 },
@@ -802,17 +746,19 @@ const tasks = [
   { name: "Had sex with 10+ people", points: 10, category: "swinging", difficulty: 3 },
   { name: "Were sex slaves to a swinger party", points: 12, category: "swinging", difficulty: 4 },
   { name: "Went to a swingers resort", points: 16, category: "swinging", difficulty: 4 },
+  // ── Lesbian ──
   { name: "Kissed a girl", points: 1, category: "lesbian", difficulty: 1 },
   { name: "Touched a girl", points: 2, category: "lesbian", difficulty: 1 },
   { name: "Got touched by a girl", points: 2, category: "lesbian", difficulty: 1 },
-  { name: "Gave oral sex with to a girl", points: 3, category: "lesbian", difficulty: 1 },
-  { name: "got oral sex from a girl", points: 3, category: "lesbian", difficulty: 1 },
+  { name: "Gave oral sex to a girl", points: 3, category: "lesbian", difficulty: 1 },
+  { name: "Got oral sex from a girl", points: 3, category: "lesbian", difficulty: 1 },
   { name: "Gave a girl an orgasm", points: 4, category: "lesbian", difficulty: 1 },
   { name: "Got an orgasm from a girl", points: 4, category: "lesbian", difficulty: 1 },
   { name: "Scissored with a girl", points: 5, category: "lesbian", difficulty: 1 },
   { name: "Fucked a girl with strapon", points: 6, category: "lesbian", difficulty: 2 },
   { name: "Got fucked by a girl with a strapon", points: 6, category: "lesbian", difficulty: 2 },
   { name: "Had sex with multiple girls at the same time", points: 8, category: "lesbian", difficulty: 3 },
+  // ── Group ──
   { name: "Fucked 2+ guys at the same time", points: 3, category: "group", difficulty: 1 },
   { name: "Got spitroasted", points: 4, category: "group", difficulty: 2 },
   { name: "Got double penetrated", points: 5, category: "group", difficulty: 2 },
@@ -824,7 +770,8 @@ const tasks = [
   { name: "Received the cum of 4+ guys on the face (Bukkake)", points: 10, category: "group", difficulty: 3 },
   { name: "Swallowed the cum of 4+ guys (Gokkun)", points: 14, category: "group", difficulty: 3 },
   { name: "Been tied up for 4+ guys", points: 12, category: "group", difficulty: 3 },
-  { name: "Played \", points: 14, category: "group", difficulty: 3 },
+  { name: "Played guess the cock", points: 14, category: "group", difficulty: 3 },
+  // ── Hotwife ──
   { name: "Browsed on dating app", points: 1, category: "hotwife", difficulty: 1 },
   { name: "Texted with bulls", points: 1, category: "hotwife", difficulty: 1 },
   { name: "Sexted with bulls", points: 2, category: "hotwife", difficulty: 1 },
@@ -849,7 +796,7 @@ const tasks = [
   { name: "Spent a whole week with bull", points: 14, category: "hotwife", difficulty: 3 },
   { name: "Went on vacation with bull", points: 16, category: "hotwife", difficulty: 4 },
   { name: "Had bull move in with you for a month", points: 24, category: "hotwife", difficulty: 4 },
-  { name: "Denied boyfriend from seing you naked/lingerie for 1 month", points: 12, category: "hotwife", difficulty: 3 },
+  { name: "Denied boyfriend from seeing you naked/lingerie for 1 month", points: 12, category: "hotwife", difficulty: 3 },
   { name: "Sent a photo of you preparing for a date with bull to boyfriend", points: 1, category: "hotwife", difficulty: 1 },
   { name: "Sent a photo of you and bull to boyfriend", points: 2, category: "hotwife", difficulty: 1 },
   { name: "Sent a photo blowing bull to boyfriend", points: 3, category: "hotwife", difficulty: 1 },
@@ -868,6 +815,7 @@ const tasks = [
   { name: "Did not have vaginal/anal sex with boyfriend for 1 year", points: 24, category: "hotwife", difficulty: 4 },
   { name: "Did not give pleasure to boyfriend for 1 year", points: 36, category: "hotwife", difficulty: 4 },
   { name: "Had sex with bull anytime he wanted for 1 week", points: 10, category: "hotwife", difficulty: 3 },
+  // ── Cuckquean ──
   { name: "Let boyfriend browse dating apps", points: 1, category: "cuckquean", difficulty: 1 },
   { name: "Let husband text with cuckcake", points: 1, category: "cuckquean", difficulty: 1 },
   { name: "Let husband sext with cuckcake", points: 2, category: "cuckquean", difficulty: 1 },
@@ -891,12 +839,14 @@ const tasks = [
   { name: "Tasted cuckcake on boyfriend's dick", points: 10, category: "cuckquean", difficulty: 2 },
   { name: "Did not have sex with boyfriend for 6 months", points: 24, category: "cuckquean", difficulty: 4 },
   { name: "Did not have sex with boyfriend for 1 year", points: 36, category: "cuckquean", difficulty: 4 },
+  // ── Games ──
   { name: "Strip card game like strip poker", points: 2, category: "games", difficulty: 1 },
-  { name: "Never have i ever", points: 3, category: "games", difficulty: 1 },
+  { name: "Never have I ever", points: 3, category: "games", difficulty: 1 },
   { name: "Truth or dare", points: 4, category: "games", difficulty: 1 },
   { name: "Naked twister", points: 4, category: "games", difficulty: 1 },
   { name: "Spin the bottle", points: 5, category: "games", difficulty: 2 },
   { name: "Guess the cock", points: 10, category: "games", difficulty: 4 },
+  // ── Femdom ──
   { name: "Tied up someone and had sex with them", points: 2, category: "femdom", difficulty: 1 },
   { name: "Blindfolded someone and had sex with them", points: 1, category: "femdom", difficulty: 1 },
   { name: "Had a slave for 2 hours", points: 3, category: "femdom", difficulty: 1 },
@@ -914,6 +864,7 @@ const tasks = [
   { name: "Denied someone in chastity for 3 days", points: 2, category: "femdom", difficulty: 2 },
   { name: "Denied someone in chastity for 1 week", points: 4, category: "femdom", difficulty: 3 },
   { name: "Denied someone in chastity for 1 month", points: 8, category: "femdom", difficulty: 4 },
+  // ── Exposition ──
   { name: "Sent a photo of you in lingerie to a stranger", points: 1, category: "exposition", difficulty: 1 },
   { name: "Sent a photo of your boobs to a stranger", points: 1, category: "exposition", difficulty: 1 },
   { name: "Sent a photo of your pussy to a stranger", points: 2, category: "exposition", difficulty: 1 },
@@ -937,7 +888,7 @@ const tasks = [
   { name: "Uploaded a photo of creampie online", points: 6, category: "exposition", difficulty: 2 },
   { name: "Uploaded a photo of facial online", points: 10, category: "exposition", difficulty: 3 },
   { name: "Uploaded a video of you masturbating online", points: 8, category: "exposition", difficulty: 3 },
-  { name: "Uplaoded a video of you having sex online", points: 12, category: "exposition", difficulty: 3 },
+  { name: "Uploaded a video of you having sex online", points: 12, category: "exposition", difficulty: 3 },
   { name: "Uploaded a video of you receiving creampie online", points: 14, category: "exposition", difficulty: 3 },
   { name: "Uploaded a video of you receiving facial online", points: 16, category: "exposition", difficulty: 3 },
   { name: "Sent a photo of you in lingerie to a stranger (Face visible)", points: 2, category: "exposition", difficulty: 3 },
@@ -963,49 +914,16 @@ const tasks = [
   { name: "Uploaded a photo of creampie online (Face visible)", points: 14, category: "exposition", difficulty: 4 },
   { name: "Uploaded a photo of facial online (Face visible)", points: 20, category: "exposition", difficulty: 4 },
   { name: "Uploaded a video of you masturbating online (Face visible)", points: 18, category: "exposition", difficulty: 4 },
-  { name: "Uplaoded a video of you having sex online (Face visible)", points: 24, category: "exposition", difficulty: 4 },
+  { name: "Uploaded a video of you having sex online (Face visible)", points: 24, category: "exposition", difficulty: 4 },
   { name: "Uploaded a video of you receiving creampie online (Face visible)", points: 30, category: "exposition", difficulty: 4 },
   { name: "Uploaded a video of you receiving facial online (Face visible)", points: 32, category: "exposition", difficulty: 4 },
   { name: "Uploaded a sexy photo of yourself in lingerie on your most used social media", points: 16, category: "exposition", difficulty: 3 },
   { name: "Sent a boudoir album to a stranger", points: 8, category: "exposition", difficulty: 3 },
-  { name: "Uploaded a boudoir album online", points: 16, category: "exposition", difficulty: 3 }
+  { name: "Uploaded a boudoir album online", points: 16, category: "exposition", difficulty: 3 },
 ];
 
-// ═══════════════════════════════════════════
-//  PROCESSOR — конвертирует оба формата
-// ═══════════════════════════════════════════
-function normalizeTask(task) {
-  // Если используется новый формат (с categories.xxx.name)
-  if (task.category && typeof task.category === 'string' && task.category.includes(' ')) {
-    // Найти ключ категории по названию
-    for (const [key, val] of Object.entries(categories)) {
-      if (val.name === task.category) {
-        return {
-          name: task.name,
-          points: task.points,
-          category: key,
-          difficulty: task.difficulty || 1
-        };
-      }
-    }
-  }
-  // Если уже простой формат
-  return {
-    name: task.name,
-    points: task.points,
-    category: task.category,
-    difficulty: task.difficulty || 1
-  };
-}
-
-// Нормализуем все задачи
-const normalizedTasks = tasks.map(normalizeTask);
-
-// ═══════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════
-let currentDiff = 1; // active max difficulty level
-let checked = {};    // { taskIndex: true/false }
+let currentDiff = 1;
+let checked = {};
 
 function loadState() {
   try {
@@ -1018,29 +936,19 @@ function saveState() {
   localStorage.setItem('uc_state', JSON.stringify({ checked, diff: currentDiff }));
 }
 
-// ═══════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════
-function visibleTasks() {
-  return normalizedTasks.filter(t => t.difficulty <= currentDiff);
-}
-
 function taskId(index) { return 'task_' + index; }
 
-// ═══════════════════════════════════════════
-//  RENDER
-// ═══════════════════════════════════════════
 function render() {
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
 
-  const visible = visibleTasks();
-  // group by category preserving order
   const catOrder = Object.keys(categories);
   const grouped = {};
   catOrder.forEach(k => grouped[k] = []);
-  normalizedTasks.forEach((t, idx) => {
-    if (t.difficulty <= currentDiff) grouped[t.category]?.push({ task: t, idx });
+  tasks.forEach((t, idx) => {
+    if (t.difficulty <= currentDiff && grouped[t.category] !== undefined) {
+      grouped[t.category].push({ task: t, idx });
+    }
   });
 
   catOrder.forEach(catKey => {
@@ -1048,15 +956,13 @@ function render() {
     const catDef = categories[catKey];
     if (!catDef) return;
 
-    // always show category card (even empty, hide empty msg)
-    const totalPts = items.reduce((s, { task }) => s + task.points, 0);
-    const donePts  = items.reduce((s, { task, idx }) => s + (checked[taskId(idx)] ? task.points : 0), 0);
+    const totalPts  = items.reduce((s, { task }) => s + task.points, 0);
+    const donePts   = items.reduce((s, { task, idx }) => s + (checked[taskId(idx)] ? task.points : 0), 0);
     const doneCount = items.filter(({ idx }) => checked[taskId(idx)]).length;
     const pct = items.length ? Math.round(doneCount / items.length * 100) : 0;
 
     const card = document.createElement('div');
     card.className = 'category-card';
-
     card.innerHTML = `
       <div class="category-header">
         <div>
@@ -1072,7 +978,7 @@ function render() {
         <div class="category-progress-fill" style="width:${pct}%"></div>
       </div>
       <div class="task-list" id="cat-${catKey}"></div>
-      ${items.length === 0 ? `<div class="cat-empty" style="display:block">No tasks at this difficulty</div>` : ''}
+      ${items.length === 0 ? '<div class="cat-empty" style="display:block">No tasks at this difficulty</div>' : ''}
     `;
 
     grid.appendChild(card);
@@ -1081,7 +987,6 @@ function render() {
     items.forEach(({ task, idx }) => {
       const id = taskId(idx);
       const done = !!checked[id];
-
       const row = document.createElement('div');
       row.className = 'task-row' + (done ? ' done' : '');
       row.innerHTML = `
@@ -1099,32 +1004,27 @@ function render() {
     });
   });
 
-  updateGlobal(visible);
+  updateGlobal();
 }
 
-function updateGlobal(visible) {
-  const total = visible.length;
-  const done  = visible.filter((t, i) => {
-    // find original index
-    const origIdx = normalizedTasks.indexOf(t);
-    return checked[taskId(origIdx)];
-  }).length;
+function updateGlobal() {
+  const visible = tasks.filter(t => t.difficulty <= currentDiff);
+  const total    = visible.length;
   const totalPts = visible.reduce((s, t) => s + t.points, 0);
-  const donePts  = visible.reduce((s, t) => {
-    const origIdx = normalizedTasks.indexOf(t);
-    return s + (checked[taskId(origIdx)] ? t.points : 0);
-  }, 0);
+  let done = 0, donePts = 0;
+  tasks.forEach((t, idx) => {
+    if (t.difficulty <= currentDiff && checked[taskId(idx)]) {
+      done++;
+      donePts += t.points;
+    }
+  });
   const pct = total ? Math.round(done / total * 100) : 0;
-
   document.getElementById('statTasks').textContent  = `${done} / ${total}`;
   document.getElementById('statPoints').textContent = `${donePts} / ${totalPts}`;
   document.getElementById('globalBar').style.width  = pct + '%';
   document.getElementById('globalPct').textContent  = pct + '%';
 }
 
-// ═══════════════════════════════════════════
-//  DIFFICULTY BUTTONS
-// ═══════════════════════════════════════════
 document.querySelectorAll('.diff-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     currentDiff = parseInt(btn.dataset.level);
@@ -1135,22 +1035,11 @@ document.querySelectorAll('.diff-btn').forEach(btn => {
   });
 });
 
-// ═══════════════════════════════════════════
-//  RESET
-// ═══════════════════════════════════════════
 document.getElementById('resetBtn').addEventListener('click', () => {
-  if (confirm('Reset all progress?')) {
-    checked = {};
-    saveState();
-    render();
-  }
+  if (confirm('Reset all progress?')) { checked = {}; saveState(); render(); }
 });
 
-// ═══════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════
 loadState();
-// sync active button to loaded diff
 document.querySelectorAll('.diff-btn').forEach(b => {
   b.classList.toggle('active', parseInt(b.dataset.level) === currentDiff);
 });
