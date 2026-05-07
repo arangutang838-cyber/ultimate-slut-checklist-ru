@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Slut Checklist RU</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            animation: slideUp 0.6s ease-out 0.2s both;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            animation: slideUp 0.6s ease-out 0.3s both;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .checklist {
+            display: grid;
+            gap: 15px;
+            animation: fadeIn 0.6s ease-out 0.4s both;
+        }
+
+        .checklist-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .checklist-item:hover {
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .checklist-item.completed {
+            background: #f0f9ff;
+            border-left-color: #10b981;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            background: white;
+            transition: all 0.3s ease;
+            margin-top: 2px;
+        }
+
+        .checklist-item.completed .checkbox {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .checkbox::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .checklist-item.completed .checkbox::after {
+            opacity: 1;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-number {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .item-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .checklist-item.completed .item-title {
+            color: #10b981;
+            text-decoration: line-through;
+        }
+
+        .item-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 40px;
+            justify-content: center;
+            animation: slideUp 0.6s ease-out 0.5s both;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+
+            .stat-box {
+                flex: 1;
+                min-width: 150px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Ultimate Slut Checklist</h1>
+            <p>Полный список для взрослых (16+)</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <span class="stat-number" id="completed">0</span>
+                <span class="stat-label">Завершено</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number" id="total">0</span>
+                <span class="stat-label">Всего</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number" id="percentage">0%</span>
+                <span class="stat-label">Прогресс</span>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="checklist" id="checklist"></div>
+
+        <div class="controls">
+            <button class="btn-primary" id="resetBtn">Сбросить всё</button>
+            <button class="btn-secondary" id="shareBtn">Поделиться</button>
+        </div>
+
+        <div class="footer">
+            <p>Ваш прогресс сохраняется автоматически в браузере</p>
+        </div>
+    </div>
+
+    <script>
+        // Контент чеклиста - добавьте ваши вопросы здесь
+        const checklist = [
+            { title: "Поцелуй в губы с страстью", description: "Долгий и глубокий поцелуй с партнёром" },
+            { title: "Секс в необычном месте", description: "Попробуйте в месте, где есть небольшой риск быть обнаруженными" },
+            { title: "Массаж всего тела", description: "Профессиональный или самодельный сеанс расслабления" },
+            { title: "Попробуйте новую позицию", description: "Найдите и попробуйте позицию, которую никогда не пробовали" },
+            { title: "Игра с едой", description: "Используйте пищу как часть интимной активности" },
+            { title: "Романтический ужин", description: "Подготовьте красивый ужин при свечах с любимым" },
+            { title: "Стриптиз для партнёра", description: "Исполните сексуальный танец для партнёра" },
+            { title: "Видеозвонок с партнёром", description: "Интимный видеозвонок на расстояние" },
+            { title: "Белье с сюрпризом", description: "Носите сексуальное нижнее белье под одеждой" },
+            { title: "Признание фантазий", description: "Расскажите партнёру о своих фантазиях" },
+            { title: "Фотосессия", description: "Сделайте сексуальные фото (только для себя!)" },
+            { title: "Ванна вместе", description: "Примите ванну или душ с партнёром" },
+            { title: "Массаж интимный", description: "Специализированный массаж интимных зон" },
+            { title: "Парфюм и запахи", description: "Используйте запахи для возбуждения" },
+            { title: "Словесная игра", description: "Говорите грязное и сексуальное во время близости" },
+            { title: "Спонтанная близость", description: "Спонтанный секс без подготовки" },
+            { title: "Медленная близость", description: "Долгий и нежный секс без спешки" },
+            { title: "Контрастный температурный эффект", description: "Используйте горячие и холодные предметы" },
+            { title: "Исследуйте эрогенные зоны", description: "Изучите чувствительные зоны партнёра" },
+            { title: "Просмотр вместе", description: "Смотрите контент для взрослых вместе с партнёром" },
+        ];
+
+        const checklistEl = document.getElementById('checklist');
+        const completedEl = document.getElementById('completed');
+        const totalEl = document.getElementById('total');
+        const percentageEl = document.getElementById('percentage');
+        const progressFill = document.getElementById('progressFill');
+        const resetBtn = document.getElementById('resetBtn');
+        const shareBtn = document.getElementById('shareBtn');
+
+        let completed = {};
+
+        // Загрузить данные из localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('checklistProgress');
+            if (saved) {
+                completed = JSON.parse(saved);
+            }
+        }
+
+        // Сохранить данные в localStorage
+        function saveProgress() {
+            localStorage.setItem('checklistProgress', JSON.stringify(completed));
+        }
+
+        // Обновить статистику
+        function updateStats() {
+            const completedCount = Object.values(completed).filter(Boolean).length;
+            const totalCount = checklist.length;
+            const percentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+
+            completedEl.textContent = completedCount;
+            totalEl.textContent = totalCount;
+            percentageEl.textContent = percentage + '%';
+            progressFill.style.width = percentage + '%';
+        }
+
+        // Рендерить чеклист
+        function renderChecklist() {
+            checklistEl.innerHTML = '';
+            checklist.forEach((item, index) => {
+                const isCompleted = completed[index] || false;
+                const itemEl = document.createElement('div');
+                itemEl.className = 'checklist-item' + (isCompleted ? ' completed' : '');
+                itemEl.innerHTML = `
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-number">Пункт ${index + 1}</div>
+                        <div class="item-title">${item.title}</div>
+                        <div class="item-description">${item.description}</div>
+                    </div>
+                `;
+                itemEl.addEventListener('click', () => {
+                    completed[index] = !completed[index];
+                    saveProgress();
+                    renderChecklist();
+                    updateStats();
+                });
+                checklistEl.appendChild(itemEl);
+            });
+        }
+
+        // Сбросить всё
+        resetBtn.addEventListener('click', () => {
+            if (confirm('Вы уверены? Это удалит весь прогресс.')) {
+                completed = {};
+                saveProgress();
+                renderChecklist();
+                updateStats();
+            }
+        });
+
+        // Поделиться
+        shareBtn.addEventListener('click', () => {
+            const completedCount = Object.values(completed).filter(Boolean).length;
+            const totalCount = checklist.length;
+            const percentage = Math.round((completedCount / totalCount) * 100);
+            const text = `Я завершил ${completedCount} из ${totalCount} пунктов (${percentage}%) в Ultimate Slut Checklist RU! 🎉`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Ultimate Slut Checklist RU',
+                    text: text
+                });
+            } else {
+                alert(text + '\n\nСкопировано в буфер обмена!');
+                navigator.clipboard.writeText(text);
+            }
+        });
+
+        // Инициализация
+        loadProgress();
+        renderChecklist();
+        updateStats();
+    </script>
+</body>
+</html>
