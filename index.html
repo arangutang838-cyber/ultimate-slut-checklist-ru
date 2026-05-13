@@ -140,8 +140,15 @@
     }
 
     .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .categories-col {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
       gap: 16px;
     }
 
@@ -329,10 +336,18 @@
     .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
     .lang-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(232,197,71,0.08); }
 
+    @media (max-width: 1200px) {
+      .categories-grid { gap: 12px; }
+    }
+    @media (max-width: 860px) {
+      .categories-grid { flex-wrap: wrap; }
+      .categories-col { flex: 1 1 45%; }
+    }
     @media (max-width: 600px) {
       .topbar { padding: 10px 14px; }
       .diff-hint { display: none; }
-      .categories-grid { grid-template-columns: 1fr; }
+      .categories-grid { flex-direction: column; }
+      .categories-col { flex: 1 1 100%; }
       .main { padding: 16px 12px 50px; }
     }
   </style>
@@ -413,7 +428,8 @@ const categories = {
   voyeurism:   { name: "Voyeurism", description: "(naked walks, being seen, exhibitionism)" },
   cuckold:       { name: "Cuckold", description: "(things done by your boyfriend as a cuckold)" },
   humiliation:   { name: "Humiliation", description: "(degradation, spitting, verbal abuse)" },
-  crossdressing: { name: "Crossdressing", description: "(sissy/femme outfits, done by boyfriend)" },
+  crossdressing:       { name: "Crossdressing", description: "(sissy/femme outfits, done by boyfriend)" },
+  chastity_ballbusting: { name: "Chastity & Ballbusting", description: "(done by boyfriend)" },
 };
 
 const categoriesRu = {
@@ -446,7 +462,8 @@ const categoriesRu = {
   voyeurism:   { name: "Вуаеризм", description: "(прогулки голой, быть увиденной, эксгибиционизм)" },
   cuckold:       { name: "Куколд", description: "(то, что делает твой парень как куколд)" },
   humiliation:   { name: "Унижение", description: "(деградация, плевки, словесное унижение)" },
-  crossdressing: { name: "Переодевание", description: "(сисси/женские образы, делает парень)" },
+  crossdressing:        { name: "Переодевание", description: "(сисси/женские образы, делает парень)" },
+  chastity_ballbusting: { name: "Пояс верности и баллбастинг", description: "(делает парень)" },
 };
 
 // ══════════════════════════════════════════════════════════════════════
@@ -488,56 +505,18 @@ const tasksRu = [
   { name: `Вылизала задницу`, points: 3, category: "oral", difficulty: 2 },
   { name: `Вылизала задницу с языком максимально глубоко`, points: 4, category: "oral", difficulty: 2 },
   // ── Anal ──
-{ name: "Был анальный секс", points: 2, category: "anal", difficulty: 1 },
-{ name: "Анальный секс 2 раза в день", points: 4, category: "anal", difficulty: 2 },
-{ name: "Анальный секс один раз в день неделю", points: 6, category: "anal", difficulty: 2 },
-{ name: "Взяла 2 члена в задницу (или дилдо)", points: 8, category: "anal", difficulty: 3 },
-{ name: "Вставила анальную пробку на 1 час", points: 3, category: "anal", difficulty: 1 },
-{ name: "Вставила анальную пробку целый день", points: 4, category: "anal", difficulty: 2 },
-{ name: "Вставила среднюю анальную пробку (6,5 см)", points: 6, category: "anal", difficulty: 3 },
-{ name: "Вставила большую анальную пробку (7,5 см)", points: 8, category: "anal", difficulty: 4 },
-{ name: "Вставила анальные бусы полностью", points: 4, category: "anal", difficulty: 2 },
-{ name: "Вставила средние анальные бусы (5 см)", points: 6, category: "anal", difficulty: 3 },
-{ name: "Вставила большие анальные бусы (6,5 см)", points: 8, category: "anal", difficulty: 4 },
-{ name: "Вставила 1 палец в анус партнёру", points: 2, category: "anal", difficulty: 1 },
-{ name: "Вставила 2 пальца в анус партнёру", points: 3, category: "anal", difficulty: 2 },
-{ name: "Вставила 3 пальца в анус партнёру", points: 4, category: "anal", difficulty: 2 },
-{ name: "Вставила 4 пальца в анус партнёру", points: 5, category: "anal", difficulty: 2 },
-{ name: "Вставила кулак в анус партнёру (фистинг)", points: 8, category: "anal", difficulty: 4 },
-{ name: "Фистила партнёра несколько раз подряд", points: 9, category: "anal", difficulty: 4 },
-{ name: "Получала фистинг в анус", points: 7, category: "anal", difficulty: 3 },
-{ name: "Получала фистинг несколько раз в день", points: 9, category: "anal", difficulty: 4 },
-{ name: "Использовала страпон для анального проникновения", points: 5, category: "anal", difficulty: 2 },
-{ name: "Получала страпон 30 минут подряд", points: 7, category: "anal", difficulty: 3 },
-{ name: "Получала большой страпон анально", points: 8, category: "anal", difficulty: 3 },
-{ name: "Получала страпон в разных позах", points: 8, category: "anal", difficulty: 3 },
-{ name: "Получала страпон и одновременно клитор ласкали", points: 9, category: "anal", difficulty: 3 },
-{ name: "Вставила анальный вибратор на низкой скорости", points: 3, category: "anal", difficulty: 1 },
-{ name: "Вставила анальный вибратор на максимальной скорости", points: 5, category: "anal", difficulty: 2 },
-{ name: "Носила анальный вибратор целый день включённым", points: 7, category: "anal", difficulty: 3 },
-{ name: "Получила оргазм от анального вибратора", points: 5, category: "anal", difficulty: 2 },
-{ name: "Вставила анальную пробку маленького размера (4 см)", points: 3, category: "anal", difficulty: 1 },
-{ name: "Ходила с анальной пробкой весь день дома", points: 5, category: "anal", difficulty: 2 },
-{ name: "Анальный секс несколько дней подряд", points: 7, category: "anal", difficulty: 3 },
-{ name: "Анальный секс в разных позах", points: 6, category: "anal", difficulty: 2 },
-{ name: "Получала анальный секс долго (30+ минут)", points: 7, category: "anal", difficulty: 3 },
-{ name: "Получала анальный секс и одновременно мастурбировала", points: 7, category: "anal", difficulty: 3 },
-{ name: "Получала 2 члена в анус (DP анальное)", points: 9, category: "anal", difficulty: 4 },
-{ name: "Получала оргазм только от анального стимулирования", points: 7, category: "anal", difficulty: 3 },
-{ name: "Получала анальный крим-пай (сперма в анусе)", points: 7, category: "anal", difficulty: 3 },
-{ name: "Анальный секс с 3 разными партнёрами в один день", points: 9, category: "anal", difficulty: 3 },
-{ name: "Получала анальный секс более 1 часа подряд", points: 9, category: "anal", difficulty: 4 },
-{ name: "Вставила всё возрастающие размеры пробок (полная прогрессия)", points: 8, category: "anal", difficulty: 3 },
-{ name: "Вставила все размеры анальных бус (полная прогрессия)", points: 8, category: "anal", difficulty: 3 },
-{ name: "Получала анальный секс в позе на спине", points: 6, category: "anal", difficulty: 2 },
-{ name: "Получала анальный секс в позе на коленях", points: 6, category: "anal", difficulty: 2 },
-{ name: "Получала анальный секс в позе сбоку", points: 6, category: "anal", difficulty: 2 },
-{ name: "Получала анальный секс в позе сидя на члене", points: 7, category: "anal", difficulty: 3 },
-{ name: "Вставила анальный фалос среднего размера", points: 4, category: "anal", difficulty: 2 },
-{ name: "Вставила анальный фалос большого размера", points: 6, category: "anal", difficulty: 3 },
-{ name: "Вставила анальный фалос с расширением", points: 5, category: "anal", difficulty: 2 },
-{ name: "Использовала несколько анальных игрушек в один день", points: 6, category: "anal", difficulty: 2 },
-{ name: "Вставила анальную пробку после анального секса", points: 5, category: "anal", difficulty: 2 },
+  { name: `Был анальный секс`, points: 2, category: "anal", difficulty: 1 },
+  { name: `Анальный секс 2 раза в день`, points: 4, category: "anal", difficulty: 2 },
+  { name: `Анальный секс один раз в день неделю`, points: 6, category: "anal", difficulty: 2 },
+  { name: `Взяла 2 члена в задницу (или дилдо)`, points: 8, category: "anal", difficulty: 3 },
+  { name: `Вставила анальную пробку`, points: 2, category: "anal", difficulty: 1 },
+  { name: `Вставила анальную пробку на 1 час`, points: 3, category: "anal", difficulty: 1 },
+  { name: `Вставила анальную пробку целый день`, points: 4, category: "anal", difficulty: 2 },
+  { name: `Вставила среднюю анальную пробку (6,5 см)`, points: 6, category: "anal", difficulty: 3 },
+  { name: `Вставила большую анальную пробку (7,5 см)`, points: 8, category: "anal", difficulty: 4 },
+  { name: `Вставила анальные бусы полностью`, points: 4, category: "anal", difficulty: 2 },
+  { name: `Вставила средние анальные бусы (5 см)`, points: 6, category: "anal", difficulty: 3 },
+  { name: `Вставила большие анальные бусы (6,5 см)`, points: 8, category: "anal", difficulty: 4 },
   // ── Orgasms ──
   { name: `Был оргазм`, points: 1, category: "orgasms", difficulty: 1 },
   { name: `Был оргазм от анального`, points: 4, category: "orgasms", difficulty: 2 },
@@ -1252,6 +1231,51 @@ const tasksRu = [
   { name: "Надел платье юбку колготки и макияж и вышел на прогулку", points: 9, category: "crossdressing", difficulty: 4 },
   { name: "Был в женском платье на публике целый день", points: 9, category: "crossdressing", difficulty: 4 },
   { name: "Был в полном женском образе на улице мимо людей", points: 10, category: "crossdressing", difficulty: 4 },
+  // ── Пояс верности и баллбастинг ──
+  { name: "Носил пояс верности 1 день", points: 2, category: "chastity_ballbusting", difficulty: 1 },
+  { name: "Носил пояс верности 3 дня", points: 3, category: "chastity_ballbusting", difficulty: 1 },
+  { name: "Носил пояс верности неделю", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Был заперт в поясе верности и не мог снять самостоятельно", points: 3, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Носил пояс верности под одеждой на работу", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Ключ был спрятан и он не знал где", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Носил пояс верности 2 недели", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Был заперт в поясе и девушка держала ключ", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Носил пояс верности в общественных местах магазин улица", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Получил ключ только после выполнения унизительного задания", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Носил пояс месяц", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Носил пояс верности и не мог мастурбировать несмотря на возбуждение", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Был заперт в поясе на 2 недели без права просить открыть", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Получил ключ и открыл пояс только после месяца ношения", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Носил пояс верности и отправлял фото девушке как доказательство", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Носил пояс верности на публике целый день", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Был заперт в поясе и возбуждался но не мог кончить", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Просил открыть пояс но получал отказ каждый раз неделю", points: 7, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Носил пояс верности 6 недель подряд", points: 7, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Был в поясе и девушка дразнила его намекая на секс", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Получил ключ только когда согласился на ballbusting сессию", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Был заперт в поясе и не имел право дотрагиваться к себе", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Получил несколько лёгких ударов по яйцам рукой", points: 2, category: "chastity_ballbusting", difficulty: 1 },
+  { name: "Был пинан по яйцам несколько раз", points: 3, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Получил серию ударов по яйцам от партнёрши", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Был пинан по яйцам ногой девушки", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Получил удары по яйцам предметом палка плеть", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Просил удары по яйцам как наказание", points: 3, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Был пинан по яйцам и падал на колени от боли", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Получил ballbusting и продолжал просить ещё", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Был пинан по яйцам до того как покраснел", points: 5, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Получил удары по яйцам и кричал от боли", points: 5, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Был пинан по яйцам девушкой несколько минут подряд", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Получил ballbusting пока лежал на полу", points: 5, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Был пинан по яйцам в присутствии другого человека", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Получил удары по яйцам ногой девушки в туфлях", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Получил ballbusting сессию 30 минут подряд", points: 7, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Был в поясе верности и получил ballbusting сессию", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Просил открыть пояс но вместо этого получил удары по яйцам", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Носил пояс месяц и в конце получил интенсивный ballbusting", points: 8, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Получил ballbusting и потом его заперли в пояс на неделю", points: 7, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Получал удары по яйцам каждый день неделю пока был в поясе", points: 8, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Был пинан по яйцам и девушка снимала это на видео", points: 7, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Получил ballbusting как наказание за нарушение правил", points: 6, category: "chastity_ballbusting", difficulty: 3 },
 ];
 
 const tasks = [
@@ -1288,56 +1312,18 @@ const tasks = [
   { name: "Gave analingus to someone", points: 3, category: "oral", difficulty: 2 },
   { name: "Gave analingus while inserting your tongue as far as possible", points: 4, category: "oral", difficulty: 2 },
   // ── Anal ──
-{ name: "Had anal sex", points: 2, category: "anal", difficulty: 1 },
-{ name: "Had anal sex 2 times in a day", points: 4, category: "anal", difficulty: 2 },
-{ name: "Had anal sex once a day for a week", points: 6, category: "anal", difficulty: 2 },
-{ name: "Took 2 cocks in ass (or dildos)", points: 8, category: "anal", difficulty: 3 },
-{ name: "Inserted anal plug for 1 hour", points: 3, category: "anal", difficulty: 1 },
-{ name: "Wore anal plug all day", points: 4, category: "anal", difficulty: 2 },
-{ name: "Inserted medium anal plug (6.5 cm)", points: 6, category: "anal", difficulty: 3 },
-{ name: "Inserted large anal plug (7.5 cm)", points: 8, category: "anal", difficulty: 4 },
-{ name: "Inserted anal beads fully", points: 4, category: "anal", difficulty: 2 },
-{ name: "Inserted medium anal beads (5 cm)", points: 6, category: "anal", difficulty: 3 },
-{ name: "Inserted large anal beads (6.5 cm)", points: 8, category: "anal", difficulty: 4 },
-{ name: "Inserted 1 finger in partner's ass", points: 2, category: "anal", difficulty: 1 },
-{ name: "Inserted 2 fingers in partner's ass", points: 3, category: "anal", difficulty: 2 },
-{ name: "Inserted 3 fingers in partner's ass", points: 4, category: "anal", difficulty: 2 },
-{ name: "Inserted 4 fingers in partner's ass", points: 5, category: "anal", difficulty: 2 },
-{ name: "Fisted partner in ass (fisting)", points: 8, category: "anal", difficulty: 4 },
-{ name: "Fisted partner multiple times in a row", points: 9, category: "anal", difficulty: 4 },
-{ name: "Got fisting in ass", points: 7, category: "anal", difficulty: 3 },
-{ name: "Got fisting multiple times a day", points: 9, category: "anal", difficulty: 4 },
-{ name: "Used strap-on for anal penetration", points: 5, category: "anal", difficulty: 2 },
-{ name: "Got strap-on for 30 minutes straight", points: 7, category: "anal", difficulty: 3 },
-{ name: "Got large strap-on anally", points: 8, category: "anal", difficulty: 3 },
-{ name: "Got strap-on in different positions", points: 8, category: "anal", difficulty: 3 },
-{ name: "Got strap-on while clit was stimulated", points: 9, category: "anal", difficulty: 3 },
-{ name: "Inserted anal vibrator on low speed", points: 3, category: "anal", difficulty: 1 },
-{ name: "Inserted anal vibrator on max speed", points: 5, category: "anal", difficulty: 2 },
-{ name: "Wore anal vibrator turned on all day", points: 7, category: "anal", difficulty: 3 },
-{ name: "Got orgasm from anal vibrator", points: 5, category: "anal", difficulty: 2 },
-{ name: "Inserted small anal plug (4 cm)", points: 3, category: "anal", difficulty: 1 },
-{ name: "Walked around with anal plug all day at home", points: 5, category: "anal", difficulty: 2 },
-{ name: "Had anal sex several days in a row", points: 7, category: "anal", difficulty: 3 },
-{ name: "Had anal sex in different positions", points: 6, category: "anal", difficulty: 2 },
-{ name: "Got anal sex for long time (30+ minutes)", points: 7, category: "anal", difficulty: 3 },
-{ name: "Got anal sex while masturbating", points: 7, category: "anal", difficulty: 3 },
-{ name: "Got 2 cocks in ass (DP anal)", points: 9, category: "anal", difficulty: 4 },
-{ name: "Got orgasm only from anal stimulation", points: 7, category: "anal", difficulty: 3 },
-{ name: "Got anal creampie (cum in ass)", points: 7, category: "anal", difficulty: 3 },
-{ name: "Had anal sex with 3 different partners in one day", points: 9, category: "anal", difficulty: 3 },
-{ name: "Had anal sex for more than 1 hour straight", points: 9, category: "anal", difficulty: 4 },
-{ name: "Inserted all increasing sizes of plugs (full progression)", points: 8, category: "anal", difficulty: 3 },
-{ name: "Inserted all sizes of anal beads (full progression)", points: 8, category: "anal", difficulty: 3 },
-{ name: "Got anal sex in lying position", points: 6, category: "anal", difficulty: 2 },
-{ name: "Got anal sex in kneeling position", points: 6, category: "anal", difficulty: 2 },
-{ name: "Got anal sex in side position", points: 6, category: "anal", difficulty: 2 },
-{ name: "Got anal sex in sitting position on cock", points: 7, category: "anal", difficulty: 3 },
-{ name: "Inserted medium anal dildo", points: 4, category: "anal", difficulty: 2 },
-{ name: "Inserted large anal dildo", points: 6, category: "anal", difficulty: 3 },
-{ name: "Inserted anal dildo with expansion", points: 5, category: "anal", difficulty: 2 },
-{ name: "Used multiple anal toys in one day", points: 6, category: "anal", difficulty: 2 },
-{ name: "Inserted anal plug after anal sex", points: 5, category: "anal", difficulty: 2 },
+  { name: "Had anal sex", points: 2, category: "anal", difficulty: 1 },
+  { name: "Had anal sex twice in a day", points: 4, category: "anal", difficulty: 2 },
+  { name: "Had anal sex once a day for a week", points: 6, category: "anal", difficulty: 2 },
+  { name: "Took 2 dicks in the ass (Or dildos)", points: 8, category: "anal", difficulty: 3 },
+  { name: "Inserted buttplug", points: 2, category: "anal", difficulty: 1 },
+  { name: "Inserted buttplug for 1 hour", points: 3, category: "anal", difficulty: 1 },
+  { name: "Inserted buttplug for a whole day", points: 4, category: "anal", difficulty: 2 },
+  { name: 'Inserted medium buttplug (2.5")', points: 6, category: "anal", difficulty: 3 },
+  { name: 'Inserted a large buttplug (3")', points: 8, category: "anal", difficulty: 4 },
+  { name: "Inserted anal beads all the way", points: 4, category: "anal", difficulty: 2 },
+  { name: 'Inserted medium anal beads (2")', points: 6, category: "anal", difficulty: 3 },
+  { name: 'Inserted large anal beads (2.5")', points: 8, category: "anal", difficulty: 4 },
   // ── Orgasms ──
   { name: "Had an orgasm", points: 1, category: "orgasms", difficulty: 1 },
   { name: "Had an orgasm from anal", points: 4, category: "orgasms", difficulty: 2 },
@@ -2052,6 +2038,51 @@ const tasks = [
   { name: "Wore dress skirt stockings and makeup and went for walk", points: 9, category: "crossdressing", difficulty: 4 },
   { name: "Was in women's dress in public all day", points: 9, category: "crossdressing", difficulty: 4 },
   { name: "Was in full women's outfit in public past people", points: 10, category: "crossdressing", difficulty: 4 },
+  // ── Chastity & Ballbusting ──
+  { name: "Wore chastity cage for 1 day", points: 2, category: "chastity_ballbusting", difficulty: 1 },
+  { name: "Wore chastity cage for 3 days", points: 3, category: "chastity_ballbusting", difficulty: 1 },
+  { name: "Wore chastity cage for a week", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Was locked in chastity and could not remove it himself", points: 3, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Wore chastity cage under clothes to work", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Key was hidden and he did not know where", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Wore chastity cage for 2 weeks", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Was locked in chastity and girlfriend held the key", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Wore chastity cage in public places store street", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Got key only after completing humiliating task", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Wore chastity cage for a month", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Wore chastity cage and could not masturbate despite arousal", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Was locked in chastity for 2 weeks without right to ask for opening", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Got key and opened cage only after month of wearing", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Wore chastity cage and sent photos to girlfriend as proof", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Wore chastity cage in public all day", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Was locked in cage and got aroused but could not cum", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Begged to open cage but got denied every time for a week", points: 7, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Wore chastity cage for 6 weeks straight", points: 7, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Was in cage and girlfriend teased him hinting at sex", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Got key only when he agreed to ballbusting session", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Was locked in cage and had no right to touch himself", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Got several light punches to balls by hand", points: 2, category: "chastity_ballbusting", difficulty: 1 },
+  { name: "Was kicked in balls several times", points: 3, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Got series of punches to balls from girlfriend", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Was kicked in balls by girlfriend's foot", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Got hits to balls with object stick whip", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Asked for hits to balls as punishment", points: 3, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Was kicked in balls and fell to his knees from pain", points: 5, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Got ballbusting and continued asking for more", points: 4, category: "chastity_ballbusting", difficulty: 2 },
+  { name: "Was kicked in balls until he turned red", points: 5, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Got punches to balls and screamed in pain", points: 5, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Was kicked in balls by girlfriend for several minutes straight", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Got ballbusting while lying on floor", points: 5, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Was kicked in balls in presence of another person", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Got punches to balls with girlfriend's foot in heels", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Got ballbusting session for 30 minutes straight", points: 7, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Was in chastity cage and got ballbusting session", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Begged to open cage but got kicked in balls instead", points: 6, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Wore cage month and at the end got intense ballbusting", points: 8, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Got ballbusting and then locked in cage for a week", points: 7, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Got kicked in balls every day for a week while in cage", points: 8, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Was kicked in balls and girlfriend recorded it on video", points: 7, category: "chastity_ballbusting", difficulty: 3 },
+  { name: "Got ballbusting as punishment for breaking rules", points: 6, category: "chastity_ballbusting", difficulty: 3 },
 ];
 
 let currentDiff = 1;
@@ -2086,7 +2117,20 @@ function render() {
     }
   });
 
-  catOrder.forEach(catKey => {
+  // Split categories into 4 columns evenly by count
+  const numCols = 4;
+  const perCol = Math.ceil(catOrder.length / numCols);
+  const columns = [];
+  for (let i = 0; i < numCols; i++) {
+    const col = document.createElement('div');
+    col.className = 'categories-col';
+    grid.appendChild(col);
+    columns.push(col);
+  }
+
+  catOrder.forEach((catKey, i) => {
+    const colIdx = i % numCols;
+    const col = columns[colIdx];
     const items = grouped[catKey];
     const catDef = cats[catKey];
     if (!catDef) return;
@@ -2116,7 +2160,7 @@ function render() {
       ${items.length === 0 ? `<div class="cat-empty" style="display:block">${currentLang === 'ru' ? 'Нет заданий на этом уровне' : 'No tasks at this difficulty'}</div>` : ''}
     `;
 
-    grid.appendChild(card);
+    col.appendChild(card);
 
     const list = card.querySelector(`#cat-${catKey}`);
     items.forEach(({ task, idx }) => {
