@@ -140,13 +140,17 @@
     }
 
     .categories-grid {
-      columns: 320px;
-      column-gap: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
     }
 
     .category-card {
-      break-inside: avoid;
-      margin-bottom: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
     }
 
     .category-card:hover { border-color: #3a3a3a; }
