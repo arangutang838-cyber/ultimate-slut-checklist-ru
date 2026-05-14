@@ -336,6 +336,100 @@
     .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
     .lang-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(232,197,71,0.08); }
 
+    /* ── Rating mode toggle ── */
+    .mode-toggle {
+      display: flex;
+      gap: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px;
+    }
+    .mode-btn {
+      padding: 5px 12px;
+      border-radius: 5px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .mode-btn:hover { color: var(--text); }
+    .mode-btn.active { background: var(--accent); color: #000; }
+
+    /* ── Rating stars row ── */
+    .rating-widget {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-left: auto;
+    }
+    .rating-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 5px;
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.9rem;
+      line-height: 1;
+      transition: all 0.12s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      opacity: 0.35;
+    }
+    .rating-btn:hover { opacity: 1; transform: scale(1.2); }
+    .rating-btn.active { opacity: 1; background: var(--surface2); border-color: var(--border); }
+
+    /* rating legend bar */
+    .rating-legend-bar { gap: 18px; }
+    .rating-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .rating-legend-icon { font-size: 1rem; line-height: 1; }
+
+    /* rating level colors when active */
+    .rating-btn[data-r="1"].active { background: rgba(239,68,68,0.15); border-color: #ef4444; }
+    .rating-btn[data-r="2"].active { background: rgba(250,204,21,0.15); border-color: #facc21; }
+    .rating-btn[data-r="3"].active { background: rgba(74,222,128,0.15); border-color: #4ade80; }
+    .rating-btn[data-r="4"].active { background: rgba(96,165,250,0.15); border-color: #60a5fa; }
+    .rating-btn[data-r="5"].active { background: rgba(244,114,182,0.15); border-color: #f472b6; }
+
+    /* hide pts in rating mode */
+    body.rating-mode .task-pts { display: none; }
+    body.rating-mode .task-check { display: none; }
+    body.rating-mode .task-row { cursor: default; }
+    body.rating-mode .task-row.done { opacity: 1; }
+    body.rating-mode .task-row.done .task-name { color: var(--text); text-decoration: none; }
+    body.rating-mode .topbar-stat.pts-stat { display: none; }
+    body.rating-mode .category-meta .pts { display: none; }
+
+    /* rating summary in category header */
+    .rating-summary {
+      display: none;
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+    body.rating-mode .rating-summary { display: block; }
+    body.rating-mode .check-count { display: none; }
+
+    /* progress bar in rating mode shows % rated */
+    body.rating-mode .progress-fill { background: #f472b6; }
+    body.rating-mode .category-progress-fill { background: #f472b6; }
+
     @media (max-width: 1200px) {
       .categories-grid { gap: 12px; }
     }
@@ -357,8 +451,13 @@
 <div class="topbar">
   <div class="topbar-title">Ultimate Checklist</div>
   <div class="topbar-stats">
-    <div class="topbar-stat">Tasks: <span id="statTasks">0 / 0</span></div>
-    <div class="topbar-stat">Points: <span id="statPoints">0 / 0</span></div>
+    <div class="topbar-stat" id="statTasksWrap">Tasks: <span id="statTasks">0 / 0</span></div>
+    <div class="topbar-stat pts-stat">Points: <span id="statPoints">0 / 0</span></div>
+    <div class="topbar-stat" id="statRatedWrap" style="display:none">Rated: <span id="statRated">0 / 0</span></div>
+  </div>
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="modeChecklist">✓ Checklist</button>
+    <button class="mode-btn" id="modeRating">♥ Rating</button>
   </div>
   <div style="display:flex;gap:6px;align-items:center;">
     <button class="lang-btn active" id="langEn">EN</button>
@@ -367,13 +466,22 @@
   <button class="btn btn-danger" id="resetBtn">Reset</button>
 </div>
 
-<div class="difficulty-bar">
+<div class="difficulty-bar" id="difficultyBar">
   <span class="difficulty-label">Difficulty:</span>
   <button class="diff-btn active" data-level="1">Easy</button>
   <button class="diff-btn" data-level="2">Medium</button>
   <button class="diff-btn" data-level="3">Hard</button>
   <button class="diff-btn" data-level="4">Extreme</button>
   <span class="diff-hint">Each level includes all easier tasks</span>
+</div>
+
+<div class="difficulty-bar rating-legend-bar" id="ratingLegendBar" style="display:none">
+  <span class="difficulty-label" id="ratingLegendLabel">Rating:</span>
+  <span class="rating-legend-item"><span class="rating-legend-icon">✕</span> <span id="rl1">Нет</span></span>
+  <span class="rating-legend-item"><span class="rating-legend-icon">👌</span> <span id="rl2">Норм</span></span>
+  <span class="rating-legend-item"><span class="rating-legend-icon">⭐</span> <span id="rl3">Нравится</span></span>
+  <span class="rating-legend-item"><span class="rating-legend-icon">💛</span> <span id="rl4">Очень нравится</span></span>
+  <span class="rating-legend-item"><span class="rating-legend-icon">❤️</span> <span id="rl5">Обожаю!</span></span>
 </div>
 
 <div class="main">
@@ -397,6 +505,12 @@
 
 <script>
 let currentLang = 'en';
+let currentMode = 'checklist'; // 'checklist' | 'rating'
+
+// Rating levels: 1=✕ 2=👌 3=⭐ 4=💛 5=❤️
+const RATING_ICONS = ['', '✕', '👌', '⭐', '💛', '❤️'];
+const RATING_LABELS_EN = ['', 'No way', "It's OK", 'Like it', 'Love it', 'Obsessed!'];
+const RATING_LABELS_RU = ['', 'Нет', 'Норм', 'Нравится', 'Очень нравится', 'Обожаю!'];
 
 const categories = {
   misc:        { name: "Sex and miscellaneous" },
@@ -2105,16 +2219,17 @@ const tasks = [
 
 let currentDiff = 1;
 let checked = {};
+let ratings = {};
 
 function loadState() {
   try {
     const s = localStorage.getItem('uc_state');
-    if (s) { const p = JSON.parse(s); checked = p.checked || {}; currentDiff = p.diff || 1; currentLang = p.lang || 'en'; }
+    if (s) { const p = JSON.parse(s); checked = p.checked || {}; ratings = p.ratings || {}; currentDiff = p.diff || 1; currentLang = p.lang || 'en'; currentMode = p.mode || 'checklist'; }
   } catch(e) {}
 }
 
 function saveState() {
-  localStorage.setItem('uc_state', JSON.stringify({ checked, diff: currentDiff, lang: currentLang }));
+  localStorage.setItem('uc_state', JSON.stringify({ checked, ratings, diff: currentDiff, lang: currentLang, mode: currentMode }));
 }
 
 function taskId(index) { return 'task_' + index; }
@@ -2153,10 +2268,14 @@ function render() {
     const catDef = cats[catKey];
     if (!catDef) return;
 
+    const isRating = currentMode === 'rating';
     const totalPts  = items.reduce((s, { task }) => s + task.points, 0);
     const donePts   = items.reduce((s, { task, idx }) => s + (checked[taskId(idx)] ? task.points : 0), 0);
     const doneCount = items.filter(({ idx }) => checked[taskId(idx)]).length;
-    const pct = items.length ? Math.round(doneCount / items.length * 100) : 0;
+    const ratedCount = items.filter(({ idx }) => ratings[taskId(idx)]).length;
+    const pct = isRating
+      ? (items.length ? Math.round(ratedCount / items.length * 100) : 0)
+      : (items.length ? Math.round(doneCount / items.length * 100) : 0);
 
     const card = document.createElement('div');
     card.className = 'category-card';
@@ -2167,7 +2286,8 @@ function render() {
           ${catDef.description ? `<div class="category-desc">${catDef.description}</div>` : ''}
         </div>
         <div class="category-meta">
-          <span>${doneCount} / ${items.length}</span>
+          <span class="check-count">${doneCount} / ${items.length}</span>
+          <span class="rating-summary">${ratedCount} / ${items.length} rated</span>
           <span class="pts">${donePts} / ${totalPts} pts</span>
         </div>
       </div>
@@ -2184,19 +2304,44 @@ function render() {
     items.forEach(({ task, idx }) => {
       const id = taskId(idx);
       const done = !!checked[id];
+      const currentRating = ratings[id] || 0;
       const row = document.createElement('div');
       row.className = 'task-row' + (done ? ' done' : '');
-      row.innerHTML = `
-        <div class="task-check"></div>
-        <span class="task-diff-dot" data-d="${task.difficulty}"></span>
-        <span class="task-name">${task.name}</span>
-        <span class="task-pts">${task.points} pt${task.points !== 1 ? 's' : ''}</span>
-      `;
-      row.addEventListener('click', () => {
-        checked[id] = !checked[id];
-        saveState();
-        render();
-      });
+
+      if (isRating) {
+        // Rating mode: show emoji rating buttons
+        const ratingBtns = [1,2,3,4,5].map(r => {
+          const lbl = currentLang === 'ru' ? RATING_LABELS_RU[r] : RATING_LABELS_EN[r];
+          return `<button class="rating-btn${currentRating === r ? ' active' : ''}" data-r="${r}" title="${lbl}">${RATING_ICONS[r]}</button>`;
+        }).join('');
+        row.innerHTML = `
+          <span class="task-diff-dot" data-d="${task.difficulty}"></span>
+          <span class="task-name">${task.name}</span>
+          <div class="rating-widget">${ratingBtns}</div>
+        `;
+        row.querySelectorAll('.rating-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const r = parseInt(btn.dataset.r);
+            ratings[id] = (ratings[id] === r) ? 0 : r; // toggle off if same
+            saveState();
+            render();
+          });
+        });
+      } else {
+        // Checklist mode: original behavior
+        row.innerHTML = `
+          <div class="task-check"></div>
+          <span class="task-diff-dot" data-d="${task.difficulty}"></span>
+          <span class="task-name">${task.name}</span>
+          <span class="task-pts">${task.points} pt${task.points !== 1 ? 's' : ''}</span>
+        `;
+        row.addEventListener('click', () => {
+          checked[id] = !checked[id];
+          saveState();
+          render();
+        });
+      }
       list.appendChild(row);
     });
   });
@@ -2208,19 +2353,65 @@ function updateGlobal() {
   const visible = tasks.filter(t => t.difficulty <= currentDiff);
   const total    = visible.length;
   const totalPts = visible.reduce((s, t) => s + t.points, 0);
-  let done = 0, donePts = 0;
+  let done = 0, donePts = 0, rated = 0;
   tasks.forEach((t, idx) => {
-    if (t.difficulty <= currentDiff && checked[taskId(idx)]) {
-      done++;
-      donePts += t.points;
+    if (t.difficulty <= currentDiff) {
+      if (checked[taskId(idx)]) { done++; donePts += t.points; }
+      if (ratings[taskId(idx)]) { rated++; }
     }
   });
-  const pct = total ? Math.round(done / total * 100) : 0;
-  document.getElementById('statTasks').textContent  = `${done} / ${total}`;
-  document.getElementById('statPoints').textContent = `${donePts} / ${totalPts}`;
-  document.getElementById('globalBar').style.width  = pct + '%';
-  document.getElementById('globalPct').textContent  = pct + '%';
+
+  if (currentMode === 'rating') {
+    const pct = total ? Math.round(rated / total * 100) : 0;
+    document.getElementById('statTasksWrap').style.display = 'none';
+    document.getElementById('statRatedWrap').style.display = '';
+    document.getElementById('statRated').textContent = `${rated} / ${total}`;
+    document.getElementById('globalBar').style.width  = pct + '%';
+    document.getElementById('globalPct').textContent  = pct + '%';
+  } else {
+    const pct = total ? Math.round(done / total * 100) : 0;
+    document.getElementById('statTasksWrap').style.display = '';
+    document.getElementById('statRatedWrap').style.display = 'none';
+    document.getElementById('statTasks').textContent  = `${done} / ${total}`;
+    document.getElementById('statPoints').textContent = `${donePts} / ${totalPts}`;
+    document.getElementById('globalBar').style.width  = pct + '%';
+    document.getElementById('globalPct').textContent  = pct + '%';
+  }
 }
+
+function updateRatingLegend() {
+  const labels = currentLang === 'ru' ? RATING_LABELS_RU : RATING_LABELS_EN;
+  for (let i = 1; i <= 5; i++) {
+    const el = document.getElementById('rl' + i);
+    if (el) el.textContent = labels[i];
+  }
+  const lbl = document.getElementById('ratingLegendLabel');
+  if (lbl) lbl.textContent = currentLang === 'ru' ? 'Оценки:' : 'Rating:';
+}
+
+function applyMode() {
+  const isRating = currentMode === 'rating';
+  document.body.classList.toggle('rating-mode', isRating);
+  document.getElementById('modeRating').classList.toggle('active', isRating);
+  document.getElementById('modeChecklist').classList.toggle('active', !isRating);
+  document.getElementById('difficultyBar').style.display = isRating ? 'none' : '';
+  document.getElementById('ratingLegendBar').style.display = isRating ? '' : 'none';
+  if (isRating) updateRatingLegend();
+}
+
+document.getElementById('modeChecklist').addEventListener('click', () => {
+  currentMode = 'checklist';
+  applyMode();
+  saveState();
+  render();
+});
+
+document.getElementById('modeRating').addEventListener('click', () => {
+  currentMode = 'rating';
+  applyMode();
+  saveState();
+  render();
+});
 
 document.querySelectorAll('.diff-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -2233,13 +2424,21 @@ document.querySelectorAll('.diff-btn').forEach(btn => {
 });
 
 document.getElementById('resetBtn').addEventListener('click', () => {
-  if (confirm(currentLang === 'ru' ? 'Сбросить весь прогресс?' : 'Reset all progress?')) { checked = {}; saveState(); render(); }
+  const msg = currentMode === 'rating'
+    ? (currentLang === 'ru' ? 'Сбросить все оценки?' : 'Reset all ratings?')
+    : (currentLang === 'ru' ? 'Сбросить весь прогресс?' : 'Reset all progress?');
+  if (confirm(msg)) {
+    if (currentMode === 'rating') { ratings = {}; }
+    else { checked = {}; }
+    saveState(); render();
+  }
 });
 
 function setLang(lang) {
   currentLang = lang;
   document.getElementById('langEn').classList.toggle('active', lang === 'en');
   document.getElementById('langRu').classList.toggle('active', lang === 'ru');
+  if (currentMode === 'rating') updateRatingLegend();
   saveState();
   render();
 }
@@ -2253,6 +2452,7 @@ document.querySelectorAll('.diff-btn').forEach(b => {
 });
 document.getElementById('langEn').classList.toggle('active', currentLang === 'en');
 document.getElementById('langRu').classList.toggle('active', currentLang === 'ru');
+applyMode();
 render();
 </script>
 </body>
